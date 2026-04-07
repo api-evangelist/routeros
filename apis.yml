@@ -1,14 +1,11 @@
 aid: routeros
 name: RouterOS
 description: >-
-  RouterOS is a powerful operating system designed specifically for managing
-  network infrastructure. It offers a wide range of features and tools that
-  allow users to configure and monitor their network devices, such as routers,
-  switches, and access points. With RouterOS, users can set up advanced network
-  configurations, create firewall rules, and manage bandwidth usage.
-  Additionally, RouterOS supports dynamic routing protocols, VLANs, and VPN
-  connections, making it a versatile solution for small businesses and large
-  enterprises alike.
+  RouterOS is a powerful operating system designed specifically for managing network
+  infrastructure. It offers a wide range of features and tools that allow users to
+  configure and monitor their network devices, such as routers, switches, and access
+  points. With RouterOS, users can set up advanced network configurations, create
+  firewall rules, and manage bandwidth usage.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
