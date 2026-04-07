@@ -19,8 +19,7 @@ specificationVersion: '0.19'
 apis:
   - aid: routeros:routeros
     name: RouterOS
-    tags:
-      - API
+    tags: []
     humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
     properties:
       - url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
