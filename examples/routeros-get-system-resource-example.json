@@ -1,0 +1,35 @@
+{
+  "title": "Get System Resources",
+  "operation": "GET /rest/system/resource",
+  "request": {
+    "method": "GET",
+    "url": "https://192.168.88.1/rest/system/resource",
+    "headers": {
+      "Authorization": "Basic YWRtaW46",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "uptime": "2d3h15m42s",
+      "version": "7.15.1 (stable)",
+      "build-time": "2024-05-01 08:00:00",
+      "factory-software": "7.2.3",
+      "free-memory": "102760448",
+      "total-memory": "134217728",
+      "cpu": "ARM",
+      "cpu-count": "4",
+      "cpu-frequency": "1400",
+      "cpu-load": "3",
+      "free-hdd-space": "52428800",
+      "total-hdd-space": "67108864",
+      "write-sect-since-reboot": "0",
+      "write-sect-total": "12500",
+      "bad-blocks": "0",
+      "architecture-name": "arm",
+      "board-name": "RB4011iGS+5HacQ2HnD",
+      "platform": "MikroTik"
+    }
+  }
+}

@@ -1,0 +1,625 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: RouterOS REST API
+  description: >-
+    RouterOS REST API for managing MikroTik network devices including IP
+    addresses, interfaces, firewall rules, routing, DHCP, DNS, and system
+    resources via JSON over HTTP/HTTPS.
+  tags:
+    - RouterOS
+    - MikroTik
+    - Networking
+    - Network Management
+    - Firewall
+    - Router
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      ROUTEROS_USERNAME: ROUTEROS_USERNAME
+      ROUTEROS_PASSWORD: ROUTEROS_PASSWORD
+      ROUTEROS_HOST: ROUTEROS_HOST
+
+capability:
+  consumes:
+    - type: http
+      namespace: routeros
+      baseUri: https://{{ROUTEROS_HOST}}/rest
+      description: RouterOS REST API for network device management
+      authentication:
+        type: basic
+        username: "{{ROUTEROS_USERNAME}}"
+        password: "{{ROUTEROS_PASSWORD}}"
+      resources:
+        - name: ip-addresses
+          path: /ip/address
+          description: IP address configuration on interfaces
+          operations:
+            - name: list-ip-addresses
+              method: GET
+              description: List all IP address configurations
+              outputRawFormat: json
+              outputParameters:
+                - name: addresses
+                  type: array
+                  value: "$."
+            - name: add-ip-address
+              method: PUT
+              description: Add a new IP address to an interface
+              body:
+                type: json
+                data:
+                  address: "{{tools.address}}"
+                  interface: "{{tools.interface}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: ip-address-item
+          path: /ip/address/{id}
+          description: Single IP address record operations
+          operations:
+            - name: get-ip-address
+              method: GET
+              description: Get a specific IP address by ID
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: RouterOS record ID (e.g., *1)
+              outputRawFormat: json
+              outputParameters:
+                - name: address
+                  type: object
+                  value: "$."
+            - name: update-ip-address
+              method: PATCH
+              description: Update an IP address configuration
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+              body:
+                type: json
+                data:
+                  address: "{{tools.address}}"
+                  interface: "{{tools.interface}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-ip-address
+              method: DELETE
+              description: Delete an IP address
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+
+        - name: interfaces
+          path: /interface
+          description: Network interface management
+          operations:
+            - name: list-interfaces
+              method: GET
+              description: List all network interfaces
+              inputParameters:
+                - name: type
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by interface type
+                - name: running
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by running state
+              outputRawFormat: json
+              outputParameters:
+                - name: interfaces
+                  type: array
+                  value: "$."
+            - name: get-interface
+              method: GET
+              description: Get a specific interface by ID
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+              outputRawFormat: json
+              outputParameters:
+                - name: interface
+                  type: object
+                  value: "$."
+
+        - name: firewall-filters
+          path: /ip/firewall/filter
+          description: Firewall filter rules
+          operations:
+            - name: list-firewall-filters
+              method: GET
+              description: List all firewall filter rules
+              inputParameters:
+                - name: chain
+                  in: query
+                  type: string
+                  required: false
+                - name: action
+                  in: query
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: rules
+                  type: array
+                  value: "$."
+            - name: add-firewall-filter
+              method: PUT
+              description: Add a new firewall filter rule
+              body:
+                type: json
+                data:
+                  chain: "{{tools.chain}}"
+                  action: "{{tools.action}}"
+                  src-address: "{{tools.src_address}}"
+                  dst-address: "{{tools.dst_address}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: firewall-nat
+          path: /ip/firewall/nat
+          description: Firewall NAT rules
+          operations:
+            - name: list-firewall-nat
+              method: GET
+              description: List all NAT rules
+              inputParameters:
+                - name: chain
+                  in: query
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: rules
+                  type: array
+                  value: "$."
+
+        - name: firewall-address-lists
+          path: /ip/firewall/address-list
+          description: Firewall address lists
+          operations:
+            - name: list-address-lists
+              method: GET
+              description: List firewall address list entries
+              inputParameters:
+                - name: list
+                  in: query
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: entries
+                  type: array
+                  value: "$."
+            - name: add-address-list-entry
+              method: PUT
+              description: Add an entry to a named address list
+              body:
+                type: json
+                data:
+                  list: "{{tools.list}}"
+                  address: "{{tools.address}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: routes
+          path: /ip/route
+          description: Routing table
+          operations:
+            - name: list-routes
+              method: GET
+              description: List all routes in the routing table
+              inputParameters:
+                - name: dst-address
+                  in: query
+                  type: string
+                  required: false
+                - name: active
+                  in: query
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: routes
+                  type: array
+                  value: "$."
+            - name: add-route
+              method: PUT
+              description: Add a new static route
+              body:
+                type: json
+                data:
+                  dst-address: "{{tools.dst_address}}"
+                  gateway: "{{tools.gateway}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: system-resource
+          path: /system/resource
+          description: System resource information
+          operations:
+            - name: get-system-resource
+              method: GET
+              description: Get system resources including CPU, memory, and uptime
+              outputRawFormat: json
+              outputParameters:
+                - name: resources
+                  type: object
+                  value: "$."
+
+        - name: system-identity
+          path: /system/identity
+          description: System hostname/identity
+          operations:
+            - name: get-system-identity
+              method: GET
+              description: Get the system hostname
+              outputRawFormat: json
+              outputParameters:
+                - name: identity
+                  type: object
+                  value: "$."
+            - name: update-system-identity
+              method: PATCH
+              description: Update the system hostname
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: dhcp-leases
+          path: /ip/dhcp-server/lease
+          description: DHCP lease management
+          operations:
+            - name: list-dhcp-leases
+              method: GET
+              description: List all DHCP leases
+              inputParameters:
+                - name: dynamic
+                  in: query
+                  type: string
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: leases
+                  type: array
+                  value: "$."
+
+        - name: dns-settings
+          path: /ip/dns
+          description: DNS cache and configuration
+          operations:
+            - name: get-dns-settings
+              method: GET
+              description: Get DNS server configuration
+              outputRawFormat: json
+              outputParameters:
+                - name: dns
+                  type: object
+                  value: "$."
+            - name: update-dns-settings
+              method: PATCH
+              description: Update DNS server configuration
+              body:
+                type: json
+                data:
+                  servers: "{{tools.servers}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: wireless-clients
+          path: /interface/wireless/registration-table
+          description: Connected wireless clients
+          operations:
+            - name: list-wireless-clients
+              method: GET
+              description: List all connected wireless clients
+              outputRawFormat: json
+              outputParameters:
+                - name: clients
+                  type: array
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: routeros-rest-api
+      resources:
+        - path: /v1/ip/addresses
+          name: ip-addresses
+          description: IP address management
+          operations:
+            - method: GET
+              name: list-ip-addresses
+              description: List all IP addresses
+              call: "routeros.list-ip-addresses"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+            - method: PUT
+              name: add-ip-address
+              description: Add a new IP address
+              call: "routeros.add-ip-address"
+              with:
+                address: "rest.address"
+                interface: "rest.interface"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/interfaces
+          name: interfaces
+          description: Network interface management
+          operations:
+            - method: GET
+              name: list-interfaces
+              description: List all network interfaces
+              call: "routeros.list-interfaces"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/firewall/filters
+          name: firewall-filters
+          description: Firewall filter rules
+          operations:
+            - method: GET
+              name: list-firewall-filters
+              description: List firewall filter rules
+              call: "routeros.list-firewall-filters"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/firewall/nat
+          name: firewall-nat
+          description: Firewall NAT rules
+          operations:
+            - method: GET
+              name: list-firewall-nat
+              description: List NAT rules
+              call: "routeros.list-firewall-nat"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/firewall/address-lists
+          name: address-lists
+          description: Firewall address lists
+          operations:
+            - method: GET
+              name: list-address-lists
+              description: List address list entries
+              call: "routeros.list-address-lists"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/routing/routes
+          name: routes
+          description: Routing table
+          operations:
+            - method: GET
+              name: list-routes
+              description: List all routes
+              call: "routeros.list-routes"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/system/resource
+          name: system-resource
+          description: System resource information
+          operations:
+            - method: GET
+              name: get-system-resource
+              description: Get system resource information
+              call: "routeros.get-system-resource"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/dhcp/leases
+          name: dhcp-leases
+          description: DHCP lease management
+          operations:
+            - method: GET
+              name: list-dhcp-leases
+              description: List DHCP leases
+              call: "routeros.list-dhcp-leases"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/wireless/clients
+          name: wireless-clients
+          description: Connected wireless clients
+          operations:
+            - method: GET
+              name: list-wireless-clients
+              description: List wireless clients
+              call: "routeros.list-wireless-clients"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: routeros-mcp
+      transport: http
+      tools:
+        - name: list-ip-addresses
+          description: List all IP address configurations on RouterOS device
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-ip-addresses"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: add-ip-address
+          description: Add a new IP address to a RouterOS interface
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "routeros.add-ip-address"
+          with:
+            address: "tools.address"
+            interface: "tools.interface"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-interfaces
+          description: List all network interfaces on RouterOS device
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-interfaces"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: list-firewall-filters
+          description: List all firewall filter rules
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-firewall-filters"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: add-firewall-filter
+          description: Add a new firewall filter rule to RouterOS
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "routeros.add-firewall-filter"
+          with:
+            chain: "tools.chain"
+            action: "tools.action"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-firewall-nat
+          description: List all NAT rules on RouterOS device
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-firewall-nat"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: list-address-lists
+          description: List firewall address list entries
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-address-lists"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: add-address-list-entry
+          description: Add an IP to a named firewall address list
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "routeros.add-address-list-entry"
+          with:
+            list: "tools.list"
+            address: "tools.address"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-routes
+          description: List all routes in the RouterOS routing table
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-routes"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: get-system-resource
+          description: Get RouterOS system resources including CPU load, memory, and uptime
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.get-system-resource"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-dhcp-leases
+          description: List all DHCP leases including dynamic and static assignments
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-dhcp-leases"
+          outputParameters:
+            - type: array
+              mapping: "$."
+
+        - name: get-dns-settings
+          description: Get RouterOS DNS server configuration
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.get-dns-settings"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-wireless-clients
+          description: List all connected wireless clients
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "routeros.list-wireless-clients"
+          outputParameters:
+            - type: array
+              mapping: "$."

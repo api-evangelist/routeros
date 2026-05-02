@@ -1,0 +1,64 @@
+{
+  "title": "RouterOS IP Address Structure",
+  "description": "Documentation of the IP address data structure returned by RouterOS REST API",
+  "type": "object",
+  "fields": [
+    {
+      "name": ".id",
+      "type": "string",
+      "description": "RouterOS internal ID prefixed with asterisk",
+      "example": "*1",
+      "required": false,
+      "readOnly": true
+    },
+    {
+      "name": "address",
+      "type": "string",
+      "description": "IP address in CIDR notation including prefix length",
+      "example": "192.168.1.1/24",
+      "required": true
+    },
+    {
+      "name": "network",
+      "type": "string",
+      "description": "Derived network address (auto-computed from address/mask)",
+      "example": "192.168.1.0",
+      "required": false,
+      "readOnly": true
+    },
+    {
+      "name": "interface",
+      "type": "string",
+      "description": "Name of the interface this address is bound to",
+      "example": "ether1",
+      "required": true
+    },
+    {
+      "name": "dynamic",
+      "type": "boolean-string",
+      "description": "True if assigned dynamically (e.g., by DHCP client)",
+      "example": "false",
+      "required": false,
+      "readOnly": true
+    },
+    {
+      "name": "disabled",
+      "type": "boolean-string",
+      "description": "True if the address is administratively disabled",
+      "example": "false",
+      "required": false
+    },
+    {
+      "name": "comment",
+      "type": "string",
+      "description": "Free-form administrator comment",
+      "example": "LAN gateway",
+      "required": false
+    }
+  ],
+  "notes": [
+    "All values returned as strings by RouterOS REST API even when semantically boolean or numeric",
+    "The .id field uses RouterOS internal format with asterisk prefix (*1, *2, etc.)",
+    "CIDR notation is required for address field (e.g., /24 not /255.255.255.0)"
+  ]
+}

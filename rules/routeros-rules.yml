@@ -1,0 +1,94 @@
+extends: spectral:oas
+rules:
+  routeros-operation-summary-title-case:
+    description: Operation summaries must use Title Case.
+    message: "Summary '{{value}}' must use Title Case."
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z][a-z]*(\\s[A-Z][a-z0-9]*)*)(\\s[A-Z][a-z]*)*$"
+
+  routeros-operationid-kebab-case:
+    description: operationId must use camelCase (RouterOS convention).
+    message: "operationId '{{value}}' must use camelCase."
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  routeros-path-kebab-case:
+    description: API paths must use kebab-case segments mirroring RouterOS menu hierarchy.
+    message: "Path segment '{{value}}' must use kebab-case."
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z][a-z0-9-]*(\\{[a-zA-Z][a-zA-Z0-9-]*\\})?)*$"
+
+  routeros-tags-title-case:
+    description: All tags must use Title Case.
+    message: "Tag '{{value}}' must use Title Case."
+    severity: warn
+    given: "$.paths[*][*].tags[*]"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9\\s]*$"
+
+  routeros-response-200-schema:
+    description: GET operations must return a schema in 200 responses.
+    message: "GET operation '{{path}}' must define a schema for the 200 response."
+    severity: warn
+    given: "$.paths[*].get.responses['200'].content[*].schema"
+    then:
+      function: truthy
+
+  routeros-security-basic-auth:
+    description: RouterOS REST API uses HTTP Basic Auth; security must be defined.
+    message: "Operation must reference a security scheme (RouterOS uses basicAuth)."
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      function: truthy
+      field: security
+      severity: hint
+
+  routeros-error-schema-defined:
+    description: Error responses must reference the Error schema component.
+    message: "Error response should reference the Error schema."
+    severity: hint
+    given: "$.paths[*][*].responses['4XX','5XX'].content[*].schema"
+    then:
+      function: truthy
+
+  routeros-put-for-create:
+    description: RouterOS uses PUT (not POST) for creating resources.
+    message: "Use PUT for creating RouterOS resources; POST is reserved for console commands."
+    severity: info
+    given: "$.paths[*].post"
+    then:
+      function: falsy
+      severity: hint
+
+  routeros-id-path-param-star-prefix:
+    description: RouterOS IDs use asterisk-prefixed strings (e.g., *1). Document this in examples.
+    message: "Path parameter 'id' should document the RouterOS *N ID format."
+    severity: hint
+    given: "$.paths[*][*].parameters[?(@.name == 'id')].example"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^\\*[0-9]+$"
+
+  routeros-string-typed-values:
+    description: RouterOS returns all values as strings even for numeric/boolean properties.
+    message: "RouterOS API returns all values as strings. Document boolean-like fields with enum ['true','false']."
+    severity: info
+    given: "$.components.schemas[*].properties[?(@.type == 'boolean')]"
+    then:
+      function: falsy

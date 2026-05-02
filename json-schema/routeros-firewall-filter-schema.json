@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/routeros/main/json-schema/routeros-firewall-filter-schema.json",
+  "title": "RouterOS Firewall Filter Rule",
+  "description": "Schema for RouterOS firewall packet filter rule",
+  "type": "object",
+  "properties": {
+    ".id": {
+      "type": "string",
+      "description": "Internal RouterOS record identifier"
+    },
+    "chain": {
+      "type": "string",
+      "description": "Firewall chain the rule belongs to",
+      "enum": ["input", "forward", "output"],
+      "examples": ["forward"]
+    },
+    "action": {
+      "type": "string",
+      "description": "Action to take when rule matches",
+      "enum": ["accept", "drop", "reject", "log", "passthrough", "jump", "return", "tarpit", "fasttrack-connection", "add-src-to-address-list", "add-dst-to-address-list"],
+      "examples": ["accept"]
+    },
+    "src-address": {
+      "type": "string",
+      "description": "Source IP address or CIDR range to match"
+    },
+    "dst-address": {
+      "type": "string",
+      "description": "Destination IP address or CIDR range to match"
+    },
+    "protocol": {
+      "type": "string",
+      "description": "Network protocol to match",
+      "examples": ["tcp", "udp", "icmp", "gre"]
+    },
+    "src-port": {
+      "type": "string",
+      "description": "Source port or range"
+    },
+    "dst-port": {
+      "type": "string",
+      "description": "Destination port or range"
+    },
+    "in-interface": {
+      "type": "string",
+      "description": "Incoming interface to match"
+    },
+    "out-interface": {
+      "type": "string",
+      "description": "Outgoing interface to match"
+    },
+    "src-address-list": {
+      "type": "string",
+      "description": "Source must be in named address list"
+    },
+    "dst-address-list": {
+      "type": "string",
+      "description": "Destination must be in named address list"
+    },
+    "connection-state": {
+      "type": "string",
+      "description": "Connection tracking state to match",
+      "examples": ["established", "related", "new", "invalid"]
+    },
+    "disabled": {
+      "type": "string",
+      "enum": ["true", "false"]
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "required": ["chain", "action"]
+}

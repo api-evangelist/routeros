@@ -1,0 +1,153 @@
+title: RouterOS Vocabulary
+description: >-
+  Domain vocabulary and taxonomy for RouterOS, MikroTik's network operating
+  system. Covers networking concepts, API constructs, and RouterOS-specific
+  terminology.
+version: '1.0'
+created: '2026-05-02'
+modified: '2026-05-02'
+
+categories:
+  - name: Network Interfaces
+    description: Types and concepts for physical and virtual network interfaces
+    terms:
+      - name: ether
+        definition: Ethernet physical interface (e.g., ether1, ether2)
+      - name: bridge
+        definition: Virtual bridge interface combining multiple ports into one segment
+      - name: vlan
+        definition: Virtual LAN interface using 802.1Q tagging
+      - name: wlan
+        definition: Wireless LAN interface (e.g., wlan1)
+      - name: pppoe
+        definition: PPPoE client interface for DSL/fiber connections
+      - name: veth
+        definition: Virtual Ethernet interface used in containers
+      - name: loopback
+        definition: Loopback interface for local routing
+
+  - name: Firewall
+    description: RouterOS firewall chains, actions, and rule concepts
+    terms:
+      - name: chain
+        definition: Logical group of firewall rules (input, forward, output, srcnat, dstnat)
+      - name: input
+        definition: Firewall chain for packets destined for the router itself
+      - name: forward
+        definition: Firewall chain for packets routed through the router
+      - name: output
+        definition: Firewall chain for packets originating from the router
+      - name: srcnat
+        definition: Source NAT chain for outbound traffic masquerading
+      - name: dstnat
+        definition: Destination NAT chain for inbound port forwarding
+      - name: masquerade
+        definition: NAT action that dynamically replaces source IP with router WAN IP
+      - name: address-list
+        definition: Named collection of IP addresses used as firewall rule criteria
+      - name: connection-state
+        definition: Packet tracking state (new, established, related, invalid)
+      - name: fasttrack
+        definition: RouterOS hardware acceleration for established connections
+
+  - name: Routing
+    description: Routing table and protocol concepts
+    terms:
+      - name: dst-address
+        definition: Destination network address in CIDR notation for route matching
+      - name: gateway
+        definition: Next-hop IP address or interface for route forwarding
+      - name: distance
+        definition: Administrative distance determining route preference (lower = preferred)
+      - name: routing-table
+        definition: Named routing table (main or VRF)
+      - name: active
+        definition: Route currently used for forwarding
+      - name: dynamic
+        definition: Route learned via dynamic routing protocol (OSPF, BGP, etc.)
+      - name: pref-src
+        definition: Preferred source IP address for locally originated packets
+
+  - name: IP Services
+    description: DHCP, DNS, and IP-level services
+    terms:
+      - name: address-pool
+        definition: Named range of IP addresses allocated by DHCP server
+      - name: lease-time
+        definition: Duration for which a DHCP address assignment is valid
+      - name: dynamic-lease
+        definition: DHCP lease automatically assigned to a client
+      - name: static-lease
+        definition: DHCP lease permanently bound to a MAC address
+      - name: dns-cache
+        definition: RouterOS local DNS resolver cache for query responses
+
+  - name: Wireless
+    description: Wireless networking terminology
+    terms:
+      - name: ssid
+        definition: Service Set Identifier - the wireless network name
+      - name: ap-bridge
+        definition: Access point bridge mode - router acts as wireless AP
+      - name: station
+        definition: Client mode - router connects to an existing wireless network
+      - name: band
+        definition: Frequency band for wireless operation (2.4GHz or 5GHz)
+      - name: registration-table
+        definition: RouterOS table of currently connected wireless clients
+      - name: signal-strength
+        definition: Received signal power in dBm from a wireless client
+
+  - name: System
+    description: RouterOS system-level concepts
+    terms:
+      - name: identity
+        definition: Router hostname used for identification
+      - name: script
+        definition: RouterOS scripting language program stored on device
+      - name: scheduler
+        definition: Automated task executor for time-based or event-based script execution
+      - name: CHR
+        definition: Cloud Hosted Router - RouterOS virtual machine edition
+      - name: winbox
+        definition: Windows-based GUI management application for RouterOS
+      - name: netwatch
+        definition: RouterOS monitoring tool that pings hosts and triggers scripts on state change
+
+  - name: API
+    description: RouterOS API-specific terminology
+    terms:
+      - name: sentence
+        definition: RouterOS TCP API unit of communication consisting of words
+      - name: word
+        definition: RouterOS TCP API length-prefixed string
+      - name: tag
+        definition: Correlation identifier for matching asynchronous API responses
+      - name: trap
+        definition: RouterOS error response type (started with !trap)
+      - name: re
+        definition: RouterOS data record response type (started with !re)
+      - name: done
+        definition: RouterOS command completion response (started with !done)
+      - name: proplist
+        definition: REST API parameter to select specific properties to return
+      - name: .id
+        definition: RouterOS internal record identifier with asterisk prefix (e.g., *1)
+
+  - name: VPN
+    description: VPN and tunnel terminology
+    terms:
+      - name: ipsec
+        definition: IP Security protocol suite for encrypted tunnels
+      - name: l2tp
+        definition: Layer 2 Tunneling Protocol for VPN connections
+      - name: pptp
+        definition: Point-to-Point Tunneling Protocol (legacy VPN)
+      - name: ovpn
+        definition: OpenVPN tunnel interface
+      - name: wireguard
+        definition: Modern VPN protocol supported in RouterOS 7.x
+      - name: peer
+        definition: Remote IPsec or WireGuard endpoint
+      - name: sa
+        definition: Security Association - negotiated VPN session parameters

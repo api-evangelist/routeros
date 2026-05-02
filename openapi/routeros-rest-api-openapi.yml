@@ -1,0 +1,1425 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST API
+  description: >-
+    The RouterOS REST API is a JSON wrapper over the RouterOS console API,
+    available from RouterOS v7.1beta4+. It provides CRUD operations on all
+    RouterOS configuration menus via standard HTTP methods. Authentication uses
+    HTTP Basic Auth with console credentials. All values in responses are
+    encoded as strings.
+  version: '7.1+'
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+
+servers:
+  - url: https://{routerIP}/rest
+    description: RouterOS REST API (HTTPS recommended)
+    variables:
+      routerIP:
+        default: 192.168.88.1
+        description: IP address of the RouterOS device
+
+security:
+  - basicAuth: []
+
+tags:
+  - name: IP Address
+    description: IP address configuration and management
+  - name: Interface
+    description: Network interface management
+  - name: Firewall
+    description: Firewall rules, NAT, and address lists
+  - name: Routing
+    description: Routing tables, BGP, OSPF, and static routes
+  - name: System
+    description: System information, identity, and scripts
+  - name: Bridge
+    description: Bridge interface management
+  - name: Wireless
+    description: Wireless interface and station management
+  - name: VPN
+    description: VPN tunnels and configurations
+  - name: DHCP
+    description: DHCP server and client management
+  - name: DNS
+    description: DNS cache and configuration
+
+paths:
+  /ip/address:
+    get:
+      operationId: listIpAddresses
+      summary: List IP Addresses
+      description: Retrieve all IP address configurations on the device.
+      tags:
+        - IP Address
+      parameters:
+        - name: .proplist
+          in: query
+          description: Comma-separated list of properties to return
+          schema:
+            type: string
+          example: address,interface,network
+        - name: interface
+          in: query
+          description: Filter by interface name
+          schema:
+            type: string
+        - name: dynamic
+          in: query
+          description: Filter by dynamic flag
+          schema:
+            type: string
+            enum: ['true', 'false']
+      responses:
+        '200':
+          description: List of IP addresses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpAddress'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: addIpAddress
+      summary: Add IP Address
+      description: Add a new IP address to an interface.
+      tags:
+        - IP Address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpAddressCreate'
+      responses:
+        '201':
+          description: IP address created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddress'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /ip/address/{id}:
+    get:
+      operationId: getIpAddress
+      summary: Get IP Address
+      description: Retrieve a specific IP address by ID.
+      tags:
+        - IP Address
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: IP address details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddress'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateIpAddress
+      summary: Update IP Address
+      description: Modify an existing IP address configuration.
+      tags:
+        - IP Address
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpAddressCreate'
+      responses:
+        '200':
+          description: IP address updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddress'
+    delete:
+      operationId: deleteIpAddress
+      summary: Delete IP Address
+      description: Remove an IP address from an interface.
+      tags:
+        - IP Address
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      responses:
+        '204':
+          description: IP address deleted
+
+  /interface:
+    get:
+      operationId: listInterfaces
+      summary: List Interfaces
+      description: Retrieve all network interfaces on the device.
+      tags:
+        - Interface
+      parameters:
+        - name: type
+          in: query
+          description: Filter by interface type (ether, bridge, vlan, etc.)
+          schema:
+            type: string
+        - name: running
+          in: query
+          description: Filter by running state
+          schema:
+            type: string
+            enum: ['true', 'false']
+      responses:
+        '200':
+          description: List of interfaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interface'
+
+  /interface/{id}:
+    get:
+      operationId: getInterface
+      summary: Get Interface
+      description: Retrieve a specific interface by ID.
+      tags:
+        - Interface
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: Interface details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interface'
+    patch:
+      operationId: updateInterface
+      summary: Update Interface
+      description: Modify an existing interface configuration.
+      tags:
+        - Interface
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterfaceUpdate'
+      responses:
+        '200':
+          description: Interface updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interface'
+
+  /ip/firewall/filter:
+    get:
+      operationId: listFirewallFilters
+      summary: List Firewall Filter Rules
+      description: Retrieve all firewall filter rules.
+      tags:
+        - Firewall
+      parameters:
+        - name: chain
+          in: query
+          description: Filter by chain (input, forward, output)
+          schema:
+            type: string
+        - name: action
+          in: query
+          description: Filter by action (accept, drop, reject)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of firewall filter rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FirewallFilter'
+    put:
+      operationId: addFirewallFilter
+      summary: Add Firewall Filter Rule
+      description: Add a new firewall filter rule.
+      tags:
+        - Firewall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallFilterCreate'
+      responses:
+        '201':
+          description: Firewall filter rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallFilter'
+
+  /ip/firewall/filter/{id}:
+    patch:
+      operationId: updateFirewallFilter
+      summary: Update Firewall Filter Rule
+      description: Modify an existing firewall filter rule.
+      tags:
+        - Firewall
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallFilterCreate'
+      responses:
+        '200':
+          description: Firewall filter rule updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallFilter'
+    delete:
+      operationId: deleteFirewallFilter
+      summary: Delete Firewall Filter Rule
+      description: Remove a firewall filter rule.
+      tags:
+        - Firewall
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      responses:
+        '204':
+          description: Firewall filter rule deleted
+
+  /ip/firewall/nat:
+    get:
+      operationId: listFirewallNat
+      summary: List Firewall NAT Rules
+      description: Retrieve all firewall NAT rules.
+      tags:
+        - Firewall
+      parameters:
+        - name: chain
+          in: query
+          description: Filter by chain (srcnat, dstnat)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of NAT rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FirewallNat'
+    put:
+      operationId: addFirewallNat
+      summary: Add Firewall NAT Rule
+      description: Add a new NAT rule.
+      tags:
+        - Firewall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallNatCreate'
+      responses:
+        '201':
+          description: NAT rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallNat'
+
+  /ip/firewall/address-list:
+    get:
+      operationId: listFirewallAddressLists
+      summary: List Firewall Address Lists
+      description: Retrieve all firewall address list entries.
+      tags:
+        - Firewall
+      parameters:
+        - name: list
+          in: query
+          description: Filter by list name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of address list entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddressList'
+    put:
+      operationId: addFirewallAddressListEntry
+      summary: Add Firewall Address List Entry
+      description: Add an IP address to a named address list.
+      tags:
+        - Firewall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressListCreate'
+      responses:
+        '201':
+          description: Address list entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressList'
+
+  /ip/route:
+    get:
+      operationId: listRoutes
+      summary: List Routes
+      description: Retrieve the routing table.
+      tags:
+        - Routing
+      parameters:
+        - name: dst-address
+          in: query
+          description: Filter by destination address
+          schema:
+            type: string
+        - name: active
+          in: query
+          description: Filter by active routes
+          schema:
+            type: string
+            enum: ['true', 'false']
+      responses:
+        '200':
+          description: List of routes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Route'
+    put:
+      operationId: addRoute
+      summary: Add Static Route
+      description: Add a new static route.
+      tags:
+        - Routing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteCreate'
+      responses:
+        '201':
+          description: Route created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+
+  /system/resource:
+    get:
+      operationId: getSystemResource
+      summary: Get System Resources
+      description: >-
+        Retrieve system resource information including CPU load, memory usage,
+        uptime, RouterOS version, and hardware details.
+      tags:
+        - System
+      responses:
+        '200':
+          description: System resource information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemResource'
+
+  /system/identity:
+    get:
+      operationId: getSystemIdentity
+      summary: Get System Identity
+      description: Retrieve the system hostname/identity.
+      tags:
+        - System
+      responses:
+        '200':
+          description: System identity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemIdentity'
+    patch:
+      operationId: updateSystemIdentity
+      summary: Update System Identity
+      description: Update the system hostname.
+      tags:
+        - System
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemIdentity'
+      responses:
+        '200':
+          description: System identity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemIdentity'
+
+  /system/script:
+    get:
+      operationId: listSystemScripts
+      summary: List System Scripts
+      description: Retrieve all configured system scripts.
+      tags:
+        - System
+      responses:
+        '200':
+          description: List of scripts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Script'
+    put:
+      operationId: addSystemScript
+      summary: Add System Script
+      description: Create a new system script.
+      tags:
+        - System
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScriptCreate'
+      responses:
+        '201':
+          description: Script created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+
+  /system/script/{id}/run:
+    post:
+      operationId: runSystemScript
+      summary: Run System Script
+      description: Execute a specific system script.
+      tags:
+        - System
+      parameters:
+        - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: Script executed
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /ip/dhcp-server:
+    get:
+      operationId: listDhcpServers
+      summary: List DHCP Servers
+      description: Retrieve all DHCP server configurations.
+      tags:
+        - DHCP
+      responses:
+        '200':
+          description: List of DHCP servers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DhcpServer'
+
+  /ip/dhcp-server/lease:
+    get:
+      operationId: listDhcpLeases
+      summary: List DHCP Leases
+      description: Retrieve all DHCP leases including dynamic and static.
+      tags:
+        - DHCP
+      parameters:
+        - name: address
+          in: query
+          description: Filter by IP address
+          schema:
+            type: string
+        - name: dynamic
+          in: query
+          description: Filter dynamic leases
+          schema:
+            type: string
+            enum: ['true', 'false']
+      responses:
+        '200':
+          description: List of DHCP leases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DhcpLease'
+
+  /ip/dns:
+    get:
+      operationId: getDnsSettings
+      summary: Get DNS Settings
+      description: Retrieve DNS cache settings and configuration.
+      tags:
+        - DNS
+      responses:
+        '200':
+          description: DNS settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsSettings'
+    patch:
+      operationId: updateDnsSettings
+      summary: Update DNS Settings
+      description: Update DNS server configuration.
+      tags:
+        - DNS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DnsSettingsUpdate'
+      responses:
+        '200':
+          description: DNS settings updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsSettings'
+
+  /interface/bridge:
+    get:
+      operationId: listBridges
+      summary: List Bridges
+      description: Retrieve all bridge interface configurations.
+      tags:
+        - Bridge
+      responses:
+        '200':
+          description: List of bridges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bridge'
+    put:
+      operationId: addBridge
+      summary: Add Bridge
+      description: Create a new bridge interface.
+      tags:
+        - Bridge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BridgeCreate'
+      responses:
+        '201':
+          description: Bridge created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bridge'
+
+  /interface/bridge/port:
+    get:
+      operationId: listBridgePorts
+      summary: List Bridge Ports
+      description: Retrieve all bridge port configurations.
+      tags:
+        - Bridge
+      parameters:
+        - name: bridge
+          in: query
+          description: Filter by bridge interface name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of bridge ports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BridgePort'
+
+  /interface/wireless:
+    get:
+      operationId: listWirelessInterfaces
+      summary: List Wireless Interfaces
+      description: Retrieve all wireless interface configurations.
+      tags:
+        - Wireless
+      responses:
+        '200':
+          description: List of wireless interfaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WirelessInterface'
+
+  /interface/wireless/registration-table:
+    get:
+      operationId: listWirelessClients
+      summary: List Wireless Clients
+      description: Retrieve all connected wireless clients from the registration table.
+      tags:
+        - Wireless
+      responses:
+        '200':
+          description: List of connected wireless clients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WirelessClient'
+
+  /ip/ipsec/policy:
+    get:
+      operationId: listIpsecPolicies
+      summary: List IPsec Policies
+      description: Retrieve all IPsec policy configurations.
+      tags:
+        - VPN
+      responses:
+        '200':
+          description: List of IPsec policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpsecPolicy'
+
+  /ip/ipsec/peer:
+    get:
+      operationId: listIpsecPeers
+      summary: List IPsec Peers
+      description: Retrieve all IPsec peer configurations.
+      tags:
+        - VPN
+      responses:
+        '200':
+          description: List of IPsec peers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpsecPeer'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials
+
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
+
+  responses:
+    Unauthorized:
+      description: Authentication required or credentials invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    IpAddress:
+      type: object
+      description: RouterOS IP address configuration
+      properties:
+        .id:
+          type: string
+          description: Internal RouterOS record ID
+          example: '*1'
+        address:
+          type: string
+          description: IP address with prefix length (CIDR notation)
+          example: '192.168.1.1/24'
+        network:
+          type: string
+          description: Network address
+          example: '192.168.1.0'
+        interface:
+          type: string
+          description: Interface name this address is assigned to
+          example: 'ether1'
+        dynamic:
+          type: string
+          description: Whether the address is dynamically assigned
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          description: Whether the address is disabled
+          enum: ['true', 'false']
+        comment:
+          type: string
+          description: Optional comment
+
+    IpAddressCreate:
+      type: object
+      required:
+        - address
+        - interface
+      properties:
+        address:
+          type: string
+          description: IP address with prefix length (CIDR notation)
+          example: '192.168.1.1/24'
+        interface:
+          type: string
+          description: Interface name to assign address to
+          example: 'ether1'
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    Interface:
+      type: object
+      description: RouterOS network interface
+      properties:
+        .id:
+          type: string
+          description: Internal RouterOS record ID
+        name:
+          type: string
+          description: Interface name
+          example: 'ether1'
+        type:
+          type: string
+          description: Interface type (ether, bridge, vlan, pppoe, etc.)
+          example: 'ether'
+        mtu:
+          type: string
+          description: Maximum transmission unit
+          example: '1500'
+        mac-address:
+          type: string
+          description: MAC address
+          example: 'AA:BB:CC:DD:EE:FF'
+        running:
+          type: string
+          description: Whether the interface is running
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    InterfaceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        mtu:
+          type: string
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    FirewallFilter:
+      type: object
+      description: RouterOS firewall filter rule
+      properties:
+        .id:
+          type: string
+        chain:
+          type: string
+          description: Firewall chain (input, forward, output)
+          example: 'forward'
+        action:
+          type: string
+          description: Rule action (accept, drop, reject, log, etc.)
+          example: 'accept'
+        src-address:
+          type: string
+          description: Source IP address or range
+        dst-address:
+          type: string
+          description: Destination IP address or range
+        protocol:
+          type: string
+          description: Network protocol (tcp, udp, icmp, etc.)
+        in-interface:
+          type: string
+          description: Incoming interface
+        out-interface:
+          type: string
+          description: Outgoing interface
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    FirewallFilterCreate:
+      type: object
+      required:
+        - chain
+        - action
+      properties:
+        chain:
+          type: string
+        action:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        protocol:
+          type: string
+        in-interface:
+          type: string
+        out-interface:
+          type: string
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    FirewallNat:
+      type: object
+      description: RouterOS NAT rule
+      properties:
+        .id:
+          type: string
+        chain:
+          type: string
+          description: NAT chain (srcnat, dstnat)
+          example: 'srcnat'
+        action:
+          type: string
+          description: NAT action (masquerade, src-nat, dst-nat, etc.)
+          example: 'masquerade'
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        out-interface:
+          type: string
+        to-addresses:
+          type: string
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    FirewallNatCreate:
+      type: object
+      required:
+        - chain
+        - action
+      properties:
+        chain:
+          type: string
+        action:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        out-interface:
+          type: string
+        to-addresses:
+          type: string
+        comment:
+          type: string
+
+    AddressList:
+      type: object
+      description: RouterOS firewall address list entry
+      properties:
+        .id:
+          type: string
+        list:
+          type: string
+          description: Address list name
+          example: 'blocked'
+        address:
+          type: string
+          description: IP address or range
+          example: '10.0.0.1'
+        dynamic:
+          type: string
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+        timeout:
+          type: string
+          description: Optional expiry timeout
+
+    AddressListCreate:
+      type: object
+      required:
+        - list
+        - address
+      properties:
+        list:
+          type: string
+        address:
+          type: string
+        comment:
+          type: string
+        timeout:
+          type: string
+
+    Route:
+      type: object
+      description: RouterOS routing table entry
+      properties:
+        .id:
+          type: string
+        dst-address:
+          type: string
+          description: Destination network in CIDR notation
+          example: '0.0.0.0/0'
+        gateway:
+          type: string
+          description: Next-hop gateway IP address
+          example: '192.168.1.254'
+        pref-src:
+          type: string
+          description: Preferred source address
+        distance:
+          type: string
+          description: Route administrative distance
+        routing-table:
+          type: string
+          description: Routing table (main or custom)
+        active:
+          type: string
+          enum: ['true', 'false']
+        dynamic:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    RouteCreate:
+      type: object
+      required:
+        - dst-address
+        - gateway
+      properties:
+        dst-address:
+          type: string
+        gateway:
+          type: string
+        distance:
+          type: string
+        comment:
+          type: string
+
+    SystemResource:
+      type: object
+      description: RouterOS system resource information
+      properties:
+        uptime:
+          type: string
+          description: System uptime
+          example: '1d2h3m4s'
+        version:
+          type: string
+          description: RouterOS version
+          example: '7.15.1'
+        build-time:
+          type: string
+          description: RouterOS build timestamp
+        free-memory:
+          type: string
+          description: Available memory in bytes
+        total-memory:
+          type: string
+          description: Total memory in bytes
+        cpu:
+          type: string
+          description: CPU model
+        cpu-count:
+          type: string
+          description: Number of CPU cores
+        cpu-load:
+          type: string
+          description: Current CPU load percentage
+        free-hdd-space:
+          type: string
+          description: Available storage in bytes
+        total-hdd-space:
+          type: string
+          description: Total storage in bytes
+        architecture-name:
+          type: string
+          description: CPU architecture
+        board-name:
+          type: string
+          description: Hardware board model
+
+    SystemIdentity:
+      type: object
+      description: RouterOS system identity/hostname
+      properties:
+        name:
+          type: string
+          description: System hostname
+          example: 'MikroTik'
+
+    Script:
+      type: object
+      description: RouterOS system script
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+          description: Script name
+        owner:
+          type: string
+          description: Script owner username
+        policy:
+          type: string
+          description: Allowed policies
+        dont-require-permissions:
+          type: string
+          enum: ['true', 'false']
+        source:
+          type: string
+          description: Script source code
+        last-started:
+          type: string
+        run-count:
+          type: string
+        comment:
+          type: string
+
+    ScriptCreate:
+      type: object
+      required:
+        - name
+        - source
+      properties:
+        name:
+          type: string
+        source:
+          type: string
+        policy:
+          type: string
+        comment:
+          type: string
+
+    DhcpServer:
+      type: object
+      description: RouterOS DHCP server configuration
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+        interface:
+          type: string
+        address-pool:
+          type: string
+        lease-time:
+          type: string
+        disabled:
+          type: string
+          enum: ['true', 'false']
+
+    DhcpLease:
+      type: object
+      description: RouterOS DHCP lease
+      properties:
+        .id:
+          type: string
+        address:
+          type: string
+          description: Assigned IP address
+        mac-address:
+          type: string
+          description: Client MAC address
+        client-id:
+          type: string
+        hostname:
+          type: string
+        expires-after:
+          type: string
+        dynamic:
+          type: string
+          enum: ['true', 'false']
+        active:
+          type: string
+          enum: ['true', 'false']
+        status:
+          type: string
+          enum: ['waiting', 'testing', 'bound', 'offered']
+
+    DnsSettings:
+      type: object
+      description: RouterOS DNS settings
+      properties:
+        servers:
+          type: string
+          description: Comma-separated DNS server IPs
+          example: '8.8.8.8,1.1.1.1'
+        dynamic-servers:
+          type: string
+        allow-remote-requests:
+          type: string
+          enum: ['true', 'false']
+        max-udp-packet-size:
+          type: string
+        query-server-timeout:
+          type: string
+        query-total-timeout:
+          type: string
+        cache-size:
+          type: string
+        cache-max-ttl:
+          type: string
+        cache-used:
+          type: string
+
+    DnsSettingsUpdate:
+      type: object
+      properties:
+        servers:
+          type: string
+        allow-remote-requests:
+          type: string
+          enum: ['true', 'false']
+        cache-size:
+          type: string
+        cache-max-ttl:
+          type: string
+
+    Bridge:
+      type: object
+      description: RouterOS bridge interface
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+          description: Bridge interface name
+          example: 'bridge1'
+        mtu:
+          type: string
+        mac-address:
+          type: string
+        running:
+          type: string
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    BridgeCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        comment:
+          type: string
+
+    BridgePort:
+      type: object
+      description: RouterOS bridge port
+      properties:
+        .id:
+          type: string
+        interface:
+          type: string
+          description: Physical interface to add to bridge
+        bridge:
+          type: string
+          description: Bridge interface name
+        hw:
+          type: string
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          enum: ['true', 'false']
+
+    WirelessInterface:
+      type: object
+      description: RouterOS wireless interface configuration
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+        mode:
+          type: string
+          description: Mode (ap-bridge, station, station-roam, etc.)
+          example: 'ap-bridge'
+        ssid:
+          type: string
+          description: Wireless SSID
+        band:
+          type: string
+          description: Frequency band (2ghz-b/g/n, 5ghz-a/n/ac, etc.)
+        channel-width:
+          type: string
+        frequency:
+          type: string
+        mac-address:
+          type: string
+        running:
+          type: string
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          enum: ['true', 'false']
+
+    WirelessClient:
+      type: object
+      description: Connected wireless client from registration table
+      properties:
+        .id:
+          type: string
+        interface:
+          type: string
+        mac-address:
+          type: string
+          description: Client MAC address
+        ap-tx-rate:
+          type: string
+        tx-rate:
+          type: string
+        rx-rate:
+          type: string
+        signal-strength:
+          type: string
+        signal-to-noise:
+          type: string
+        uptime:
+          type: string
+        last-activity:
+          type: string
+
+    IpsecPolicy:
+      type: object
+      description: RouterOS IPsec policy
+      properties:
+        .id:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        action:
+          type: string
+        tunnel:
+          type: string
+          enum: ['true', 'false']
+        disabled:
+          type: string
+          enum: ['true', 'false']
+
+    IpsecPeer:
+      type: object
+      description: RouterOS IPsec peer configuration
+      properties:
+        .id:
+          type: string
+        address:
+          type: string
+          description: Peer IP address
+        auth-method:
+          type: string
+        exchange-mode:
+          type: string
+        disabled:
+          type: string
+          enum: ['true', 'false']
+        comment:
+          type: string
+
+    Error:
+      type: object
+      description: API error response
+      properties:
+        detail:
+          type: string
+          description: Error message
+          example: 'no such item'
+        error:
+          type: integer
+          description: Error code

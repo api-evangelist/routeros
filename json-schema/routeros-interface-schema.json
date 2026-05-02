@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/routeros/main/json-schema/routeros-interface-schema.json",
+  "title": "RouterOS Interface",
+  "description": "Schema for RouterOS network interface resource",
+  "type": "object",
+  "properties": {
+    ".id": {
+      "type": "string",
+      "description": "Internal RouterOS record identifier",
+      "examples": ["*1"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Interface name",
+      "examples": ["ether1", "wlan1", "bridge1", "vlan100"]
+    },
+    "type": {
+      "type": "string",
+      "description": "Interface type",
+      "examples": ["ether", "bridge", "vlan", "pppoe", "wireless", "loopback", "veth"]
+    },
+    "mtu": {
+      "type": "string",
+      "description": "Maximum Transmission Unit in bytes",
+      "examples": ["1500", "9000"]
+    },
+    "mac-address": {
+      "type": "string",
+      "description": "Hardware MAC address",
+      "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$",
+      "examples": ["AA:BB:CC:DD:EE:FF"]
+    },
+    "running": {
+      "type": "string",
+      "description": "Whether the interface is currently active",
+      "enum": ["true", "false"]
+    },
+    "disabled": {
+      "type": "string",
+      "description": "Whether the interface is administratively disabled",
+      "enum": ["true", "false"]
+    },
+    "comment": {
+      "type": "string",
+      "description": "Optional administrator comment"
+    }
+  },
+  "required": ["name", "type"]
+}

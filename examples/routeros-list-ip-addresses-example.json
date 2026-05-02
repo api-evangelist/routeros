@@ -1,0 +1,39 @@
+{
+  "title": "List IP Addresses",
+  "operation": "GET /rest/ip/address",
+  "request": {
+    "method": "GET",
+    "url": "https://192.168.88.1/rest/ip/address",
+    "headers": {
+      "Authorization": "Basic YWRtaW46",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        ".id": "*1",
+        "address": "192.168.88.1/24",
+        "network": "192.168.88.0",
+        "interface": "bridge",
+        "actual-interface": "bridge",
+        "invalid": "false",
+        "dynamic": "false",
+        "disabled": "false",
+        "comment": "LAN Gateway"
+      },
+      {
+        ".id": "*2",
+        "address": "10.0.0.2/30",
+        "network": "10.0.0.0",
+        "interface": "ether1",
+        "actual-interface": "ether1",
+        "invalid": "false",
+        "dynamic": "false",
+        "disabled": "false",
+        "comment": "WAN Interface"
+      }
+    ]
+  }
+}

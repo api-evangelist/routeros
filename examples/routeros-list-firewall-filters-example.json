@@ -1,0 +1,59 @@
+{
+  "title": "List Firewall Filter Rules",
+  "operation": "GET /rest/ip/firewall/filter",
+  "request": {
+    "method": "GET",
+    "url": "https://192.168.88.1/rest/ip/firewall/filter?chain=input",
+    "headers": {
+      "Authorization": "Basic YWRtaW46",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        ".id": "*1",
+        "chain": "input",
+        "action": "accept",
+        "protocol": "icmp",
+        "connection-state": "",
+        "in-interface": "",
+        "src-address": "",
+        "dst-address": "",
+        "disabled": "false",
+        "invalid": "false",
+        "dynamic": "false",
+        "comment": "Accept ICMP"
+      },
+      {
+        ".id": "*2",
+        "chain": "input",
+        "action": "accept",
+        "connection-state": "established,related",
+        "protocol": "",
+        "in-interface": "",
+        "src-address": "",
+        "dst-address": "",
+        "disabled": "false",
+        "invalid": "false",
+        "dynamic": "false",
+        "comment": "Accept established connections"
+      },
+      {
+        ".id": "*3",
+        "chain": "input",
+        "action": "drop",
+        "in-interface": "ether1",
+        "protocol": "",
+        "connection-state": "",
+        "src-address": "",
+        "dst-address": "",
+        "disabled": "false",
+        "invalid": "false",
+        "dynamic": "false",
+        "comment": "Drop WAN input"
+      }
+    ]
+  }
+}

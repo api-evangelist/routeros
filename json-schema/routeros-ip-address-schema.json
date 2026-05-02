@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/routeros/main/json-schema/routeros-ip-address-schema.json",
+  "title": "RouterOS IP Address",
+  "description": "Schema for RouterOS IP address configuration resource",
+  "type": "object",
+  "properties": {
+    ".id": {
+      "type": "string",
+      "description": "Internal RouterOS record identifier (asterisk-prefixed integer)",
+      "pattern": "^\\*[0-9]+$",
+      "examples": ["*1", "*2"]
+    },
+    "address": {
+      "type": "string",
+      "description": "IP address with prefix length in CIDR notation",
+      "pattern": "^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}/\\d{1,2}$",
+      "examples": ["192.168.1.1/24", "10.0.0.1/8"]
+    },
+    "network": {
+      "type": "string",
+      "description": "Network address derived from address and mask",
+      "examples": ["192.168.1.0", "10.0.0.0"]
+    },
+    "interface": {
+      "type": "string",
+      "description": "Network interface the address is assigned to",
+      "examples": ["ether1", "bridge1", "wlan1"]
+    },
+    "dynamic": {
+      "type": "string",
+      "description": "Whether the address was dynamically assigned (RouterOS returns booleans as strings)",
+      "enum": ["true", "false"]
+    },
+    "disabled": {
+      "type": "string",
+      "description": "Whether the address is administratively disabled",
+      "enum": ["true", "false"]
+    },
+    "comment": {
+      "type": "string",
+      "description": "Optional administrator comment"
+    }
+  },
+  "required": ["address", "interface"]
+}

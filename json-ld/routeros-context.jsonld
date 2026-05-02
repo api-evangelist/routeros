@@ -1,0 +1,106 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "routeros": "https://help.mikrotik.com/docs/spaces/ROS/vocab#",
+
+    "RouterOSDevice": {
+      "@id": "schema:NetworkDevice",
+      "@type": "@id"
+    },
+    "RouterOSInterface": {
+      "@id": "routeros:Interface",
+      "@type": "@id"
+    },
+    "RouterOSIpAddress": {
+      "@id": "routeros:IpAddress",
+      "@type": "@id"
+    },
+    "RouterOSFirewallRule": {
+      "@id": "routeros:FirewallRule",
+      "@type": "@id"
+    },
+    "RouterOSRoute": {
+      "@id": "routeros:Route",
+      "@type": "@id"
+    },
+
+    "address": {
+      "@id": "schema:addressLocality",
+      "@type": "xsd:string"
+    },
+    "interface": {
+      "@id": "routeros:interface",
+      "@type": "xsd:string"
+    },
+    "network": {
+      "@id": "routeros:network",
+      "@type": "xsd:string"
+    },
+    "gateway": {
+      "@id": "routeros:gateway",
+      "@type": "xsd:string"
+    },
+    "macAddress": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "chain": {
+      "@id": "routeros:chain",
+      "@type": "xsd:string"
+    },
+    "action": {
+      "@id": "routeros:action",
+      "@type": "xsd:string"
+    },
+    "protocol": {
+      "@id": "routeros:protocol",
+      "@type": "xsd:string"
+    },
+    "uptime": {
+      "@id": "schema:duration",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "schema:softwareVersion",
+      "@type": "xsd:string"
+    },
+    "cpuLoad": {
+      "@id": "routeros:cpuLoad",
+      "@type": "xsd:string"
+    },
+    "freeMemory": {
+      "@id": "routeros:freeMemory",
+      "@type": "xsd:string"
+    },
+    "totalMemory": {
+      "@id": "routeros:totalMemory",
+      "@type": "xsd:string"
+    },
+    "disabled": {
+      "@id": "schema:enabled",
+      "@type": "xsd:string"
+    },
+    "comment": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "ssid": {
+      "@id": "routeros:ssid",
+      "@type": "xsd:string"
+    },
+    "signalStrength": {
+      "@id": "routeros:signalStrength",
+      "@type": "xsd:string"
+    },
+    "leaseTime": {
+      "@id": "routeros:leaseTime",
+      "@type": "xsd:string"
+    },
+    "dnsServers": {
+      "@id": "schema:contentUrl",
+      "@type": "xsd:string"
+    }
+  }
+}
