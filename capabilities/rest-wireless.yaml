@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — Wireless
+  description: 'RouterOS REST API — Wireless. 2 operations. Lead operation: List Wireless Interfaces. Self-contained Naftiko
+    capability covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - Wireless
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-wireless
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — Wireless business capability. Self-contained, no shared references.
+    resources:
+    - name: interface-wireless
+      path: /interface/wireless
+      operations:
+      - name: listwirelessinterfaces
+        method: GET
+        description: List Wireless Interfaces
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: interface-wireless-registration-table
+      path: /interface/wireless/registration-table
+      operations:
+      - name: listwirelessclients
+        method: GET
+        description: List Wireless Clients
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-wireless-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — Wireless. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/interface/wireless
+      name: interface-wireless
+      description: REST surface for interface-wireless.
+      operations:
+      - method: GET
+        name: listwirelessinterfaces
+        description: List Wireless Interfaces
+        call: rest-wireless.listwirelessinterfaces
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/interface/wireless/registration-table
+      name: interface-wireless-registration-table
+      description: REST surface for interface-wireless-registration-table.
+      operations:
+      - method: GET
+        name: listwirelessclients
+        description: List Wireless Clients
+        call: rest-wireless.listwirelessclients
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-wireless-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — Wireless. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-wireless-interfaces
+      description: List Wireless Interfaces
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-wireless.listwirelessinterfaces
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-wireless-clients
+      description: List Wireless Clients
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-wireless.listwirelessclients
+      outputParameters:
+      - type: object
+        mapping: $.

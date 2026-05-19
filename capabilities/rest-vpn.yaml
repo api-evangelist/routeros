@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — VPN
+  description: 'RouterOS REST API — VPN. 2 operations. Lead operation: List IPsec Peers. Self-contained Naftiko capability
+    covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - VPN
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-vpn
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — VPN business capability. Self-contained, no shared references.
+    resources:
+    - name: ip-ipsec-peer
+      path: /ip/ipsec/peer
+      operations:
+      - name: listipsecpeers
+        method: GET
+        description: List IPsec Peers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ip-ipsec-policy
+      path: /ip/ipsec/policy
+      operations:
+      - name: listipsecpolicies
+        method: GET
+        description: List IPsec Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-vpn-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — VPN. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ip/ipsec/peer
+      name: ip-ipsec-peer
+      description: REST surface for ip-ipsec-peer.
+      operations:
+      - method: GET
+        name: listipsecpeers
+        description: List IPsec Peers
+        call: rest-vpn.listipsecpeers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ip/ipsec/policy
+      name: ip-ipsec-policy
+      description: REST surface for ip-ipsec-policy.
+      operations:
+      - method: GET
+        name: listipsecpolicies
+        description: List IPsec Policies
+        call: rest-vpn.listipsecpolicies
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-vpn-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — VPN. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-ipsec-peers
+      description: List IPsec Peers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-vpn.listipsecpeers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-ipsec-policies
+      description: List IPsec Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-vpn.listipsecpolicies
+      outputParameters:
+      - type: object
+        mapping: $.

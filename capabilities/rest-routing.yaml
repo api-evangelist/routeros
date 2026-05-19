@@ -1,0 +1,121 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — Routing
+  description: 'RouterOS REST API — Routing. 2 operations. Lead operation: List Routes. Self-contained Naftiko capability
+    covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - Routing
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-routing
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — Routing business capability. Self-contained, no shared references.
+    resources:
+    - name: ip-route
+      path: /ip/route
+      operations:
+      - name: listroutes
+        method: GET
+        description: List Routes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dst-address
+          in: query
+          type: string
+          description: Filter by destination address
+        - name: active
+          in: query
+          type: string
+          description: Filter by active routes
+      - name: addroute
+        method: PUT
+        description: Add Static Route
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-routing-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — Routing. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ip/route
+      name: ip-route
+      description: REST surface for ip-route.
+      operations:
+      - method: GET
+        name: listroutes
+        description: List Routes
+        call: rest-routing.listroutes
+        with:
+          dst-address: rest.dst-address
+          active: rest.active
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addroute
+        description: Add Static Route
+        call: rest-routing.addroute
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-routing-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — Routing. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-routes
+      description: List Routes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-routing.listroutes
+      with:
+        dst-address: tools.dst-address
+        active: tools.active
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-static-route
+      description: Add Static Route
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-routing.addroute
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,153 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — Interface
+  description: 'RouterOS REST API — Interface. 3 operations. Lead operation: List Interfaces. Self-contained Naftiko capability
+    covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - Interface
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-interface
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — Interface business capability. Self-contained, no shared references.
+    resources:
+    - name: interface
+      path: /interface
+      operations:
+      - name: listinterfaces
+        method: GET
+        description: List Interfaces
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: query
+          type: string
+          description: Filter by interface type (ether, bridge, vlan, etc.)
+        - name: running
+          in: query
+          type: string
+          description: Filter by running state
+    - name: interface-id
+      path: /interface/{id}
+      operations:
+      - name: getinterface
+        method: GET
+        description: Get Interface
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateinterface
+        method: PATCH
+        description: Update Interface
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-interface-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — Interface. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/interface
+      name: interface
+      description: REST surface for interface.
+      operations:
+      - method: GET
+        name: listinterfaces
+        description: List Interfaces
+        call: rest-interface.listinterfaces
+        with:
+          type: rest.type
+          running: rest.running
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/interface/{id}
+      name: interface-id
+      description: REST surface for interface-id.
+      operations:
+      - method: GET
+        name: getinterface
+        description: Get Interface
+        call: rest-interface.getinterface
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateinterface
+        description: Update Interface
+        call: rest-interface.updateinterface
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-interface-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — Interface. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-interfaces
+      description: List Interfaces
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-interface.listinterfaces
+      with:
+        type: tools.type
+        running: tools.running
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-interface
+      description: Get Interface
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-interface.getinterface
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-interface
+      description: Update Interface
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-interface.updateinterface
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

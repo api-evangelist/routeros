@@ -1,0 +1,147 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — Bridge
+  description: 'RouterOS REST API — Bridge. 3 operations. Lead operation: List Bridges. Self-contained Naftiko capability
+    covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - Bridge
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-bridge
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — Bridge business capability. Self-contained, no shared references.
+    resources:
+    - name: interface-bridge
+      path: /interface/bridge
+      operations:
+      - name: listbridges
+        method: GET
+        description: List Bridges
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addbridge
+        method: PUT
+        description: Add Bridge
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: interface-bridge-port
+      path: /interface/bridge/port
+      operations:
+      - name: listbridgeports
+        method: GET
+        description: List Bridge Ports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bridge
+          in: query
+          type: string
+          description: Filter by bridge interface name
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-bridge-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — Bridge. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/interface/bridge
+      name: interface-bridge
+      description: REST surface for interface-bridge.
+      operations:
+      - method: GET
+        name: listbridges
+        description: List Bridges
+        call: rest-bridge.listbridges
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addbridge
+        description: Add Bridge
+        call: rest-bridge.addbridge
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/interface/bridge/port
+      name: interface-bridge-port
+      description: REST surface for interface-bridge-port.
+      operations:
+      - method: GET
+        name: listbridgeports
+        description: List Bridge Ports
+        call: rest-bridge.listbridgeports
+        with:
+          bridge: rest.bridge
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-bridge-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — Bridge. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-bridges
+      description: List Bridges
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-bridge.listbridges
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-bridge
+      description: Add Bridge
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-bridge.addbridge
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bridge-ports
+      description: List Bridge Ports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-bridge.listbridgeports
+      with:
+        bridge: tools.bridge
+      outputParameters:
+      - type: object
+        mapping: $.

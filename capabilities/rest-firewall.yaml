@@ -1,0 +1,340 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — Firewall
+  description: 'RouterOS REST API — Firewall. 8 operations. Lead operation: List Firewall Address Lists. Self-contained Naftiko
+    capability covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - Firewall
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-firewall
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — Firewall business capability. Self-contained, no shared references.
+    resources:
+    - name: ip-firewall-address-list
+      path: /ip/firewall/address-list
+      operations:
+      - name: listfirewalladdresslists
+        method: GET
+        description: List Firewall Address Lists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list
+          in: query
+          type: string
+          description: Filter by list name
+      - name: addfirewalladdresslistentry
+        method: PUT
+        description: Add Firewall Address List Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ip-firewall-filter
+      path: /ip/firewall/filter
+      operations:
+      - name: listfirewallfilters
+        method: GET
+        description: List Firewall Filter Rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chain
+          in: query
+          type: string
+          description: Filter by chain (input, forward, output)
+        - name: action
+          in: query
+          type: string
+          description: Filter by action (accept, drop, reject)
+      - name: addfirewallfilter
+        method: PUT
+        description: Add Firewall Filter Rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: ip-firewall-filter-id
+      path: /ip/firewall/filter/{id}
+      operations:
+      - name: updatefirewallfilter
+        method: PATCH
+        description: Update Firewall Filter Rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletefirewallfilter
+        method: DELETE
+        description: Delete Firewall Filter Rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ip-firewall-nat
+      path: /ip/firewall/nat
+      operations:
+      - name: listfirewallnat
+        method: GET
+        description: List Firewall NAT Rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chain
+          in: query
+          type: string
+          description: Filter by chain (srcnat, dstnat)
+      - name: addfirewallnat
+        method: PUT
+        description: Add Firewall NAT Rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-firewall-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — Firewall. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ip/firewall/address-list
+      name: ip-firewall-address-list
+      description: REST surface for ip-firewall-address-list.
+      operations:
+      - method: GET
+        name: listfirewalladdresslists
+        description: List Firewall Address Lists
+        call: rest-firewall.listfirewalladdresslists
+        with:
+          list: rest.list
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addfirewalladdresslistentry
+        description: Add Firewall Address List Entry
+        call: rest-firewall.addfirewalladdresslistentry
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ip/firewall/filter
+      name: ip-firewall-filter
+      description: REST surface for ip-firewall-filter.
+      operations:
+      - method: GET
+        name: listfirewallfilters
+        description: List Firewall Filter Rules
+        call: rest-firewall.listfirewallfilters
+        with:
+          chain: rest.chain
+          action: rest.action
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addfirewallfilter
+        description: Add Firewall Filter Rule
+        call: rest-firewall.addfirewallfilter
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ip/firewall/filter/{id}
+      name: ip-firewall-filter-id
+      description: REST surface for ip-firewall-filter-id.
+      operations:
+      - method: PATCH
+        name: updatefirewallfilter
+        description: Update Firewall Filter Rule
+        call: rest-firewall.updatefirewallfilter
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletefirewallfilter
+        description: Delete Firewall Filter Rule
+        call: rest-firewall.deletefirewallfilter
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ip/firewall/nat
+      name: ip-firewall-nat
+      description: REST surface for ip-firewall-nat.
+      operations:
+      - method: GET
+        name: listfirewallnat
+        description: List Firewall NAT Rules
+        call: rest-firewall.listfirewallnat
+        with:
+          chain: rest.chain
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: addfirewallnat
+        description: Add Firewall NAT Rule
+        call: rest-firewall.addfirewallnat
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-firewall-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — Firewall. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-firewall-address-lists
+      description: List Firewall Address Lists
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-firewall.listfirewalladdresslists
+      with:
+        list: tools.list
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-firewall-address-list-entry
+      description: Add Firewall Address List Entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-firewall.addfirewalladdresslistentry
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-firewall-filter-rules
+      description: List Firewall Filter Rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-firewall.listfirewallfilters
+      with:
+        chain: tools.chain
+        action: tools.action
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-firewall-filter-rule
+      description: Add Firewall Filter Rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-firewall.addfirewallfilter
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-firewall-filter-rule
+      description: Update Firewall Filter Rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-firewall.updatefirewallfilter
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-firewall-filter-rule
+      description: Delete Firewall Filter Rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: rest-firewall.deletefirewallfilter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-firewall-nat-rules
+      description: List Firewall NAT Rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-firewall.listfirewallnat
+      with:
+        chain: tools.chain
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-firewall-nat-rule
+      description: Add Firewall NAT Rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: rest-firewall.addfirewallnat
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

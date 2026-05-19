@@ -1,0 +1,118 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: RouterOS REST API — DHCP
+  description: 'RouterOS REST API — DHCP. 2 operations. Lead operation: List DHCP Servers. Self-contained Naftiko capability
+    covering one Routeros business surface.'
+  tags:
+  - Routeros
+  - DHCP
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ROUTEROS_API_KEY: ROUTEROS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-dhcp
+    baseUri: https://{routerIP}/rest
+    description: RouterOS REST API — DHCP business capability. Self-contained, no shared references.
+    resources:
+    - name: ip-dhcp-server
+      path: /ip/dhcp-server
+      operations:
+      - name: listdhcpservers
+        method: GET
+        description: List DHCP Servers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ip-dhcp-server-lease
+      path: /ip/dhcp-server/lease
+      operations:
+      - name: listdhcpleases
+        method: GET
+        description: List DHCP Leases
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: address
+          in: query
+          type: string
+          description: Filter by IP address
+        - name: dynamic
+          in: query
+          type: string
+          description: Filter dynamic leases
+    authentication:
+      type: basic
+      username: '{{env.ROUTEROS_USER}}'
+      password: '{{env.ROUTEROS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: rest-dhcp-rest
+    port: 8080
+    description: REST adapter for RouterOS REST API — DHCP. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ip/dhcp-server
+      name: ip-dhcp-server
+      description: REST surface for ip-dhcp-server.
+      operations:
+      - method: GET
+        name: listdhcpservers
+        description: List DHCP Servers
+        call: rest-dhcp.listdhcpservers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ip/dhcp-server/lease
+      name: ip-dhcp-server-lease
+      description: REST surface for ip-dhcp-server-lease.
+      operations:
+      - method: GET
+        name: listdhcpleases
+        description: List DHCP Leases
+        call: rest-dhcp.listdhcpleases
+        with:
+          address: rest.address
+          dynamic: rest.dynamic
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-dhcp-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for RouterOS REST API — DHCP. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-dhcp-servers
+      description: List DHCP Servers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-dhcp.listdhcpservers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-dhcp-leases
+      description: List DHCP Leases
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-dhcp.listdhcpleases
+      with:
+        address: tools.address
+        dynamic: tools.dynamic
+      outputParameters:
+      - type: object
+        mapping: $.
