@@ -1,0 +1,694 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "IP Address",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List IP Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/address",
+            "params": [
+              {
+                "name": ".proplist",
+                "value": "address,interface,network",
+                "type": "query",
+                "description": "Comma-separated list of properties to return"
+              },
+              {
+                "name": "interface",
+                "value": "",
+                "type": "query",
+                "description": "Filter by interface name"
+              },
+              {
+                "name": "dynamic",
+                "value": "",
+                "type": "query",
+                "description": "Filter by dynamic flag"
+              }
+            ]
+          },
+          "docs": "Retrieve all IP address configurations on the device."
+        },
+        {
+          "info": {
+            "name": "Add IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/address",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new IP address to an interface."
+        },
+        {
+          "info": {
+            "name": "Get IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/address/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific IP address by ID."
+        },
+        {
+          "info": {
+            "name": "Update IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/ip/address/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an existing IP address configuration."
+        },
+        {
+          "info": {
+            "name": "Delete IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{routerIP}/rest/ip/address/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Remove an IP address from an interface."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Interface",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Interfaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by interface type (ether, bridge, vlan, etc.)"
+              },
+              {
+                "name": "running",
+                "value": "",
+                "type": "query",
+                "description": "Filter by running state"
+              }
+            ]
+          },
+          "docs": "Retrieve all network interfaces on the device."
+        },
+        {
+          "info": {
+            "name": "Get Interface",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific interface by ID."
+        },
+        {
+          "info": {
+            "name": "Update Interface",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/interface/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an existing interface configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Firewall",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Firewall Filter Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/firewall/filter",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by chain (input, forward, output)"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filter by action (accept, drop, reject)"
+              }
+            ]
+          },
+          "docs": "Retrieve all firewall filter rules."
+        },
+        {
+          "info": {
+            "name": "Add Firewall Filter Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/firewall/filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new firewall filter rule."
+        },
+        {
+          "info": {
+            "name": "Update Firewall Filter Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/ip/firewall/filter/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an existing firewall filter rule."
+        },
+        {
+          "info": {
+            "name": "Delete Firewall Filter Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{routerIP}/rest/ip/firewall/filter/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Remove a firewall filter rule."
+        },
+        {
+          "info": {
+            "name": "List Firewall NAT Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/firewall/nat",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by chain (srcnat, dstnat)"
+              }
+            ]
+          },
+          "docs": "Retrieve all firewall NAT rules."
+        },
+        {
+          "info": {
+            "name": "Add Firewall NAT Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/firewall/nat",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new NAT rule."
+        },
+        {
+          "info": {
+            "name": "List Firewall Address Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/firewall/address-list",
+            "params": [
+              {
+                "name": "list",
+                "value": "",
+                "type": "query",
+                "description": "Filter by list name"
+              }
+            ]
+          },
+          "docs": "Retrieve all firewall address list entries."
+        },
+        {
+          "info": {
+            "name": "Add Firewall Address List Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/firewall/address-list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an IP address to a named address list."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Routing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Routes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/route",
+            "params": [
+              {
+                "name": "dst-address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by destination address"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter by active routes"
+              }
+            ]
+          },
+          "docs": "Retrieve the routing table."
+        },
+        {
+          "info": {
+            "name": "Add Static Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/route",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new static route."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get System Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/system/resource"
+          },
+          "docs": "Retrieve system resource information including CPU load, memory usage, uptime, RouterOS version, and hardware details."
+        },
+        {
+          "info": {
+            "name": "Get System Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/system/identity"
+          },
+          "docs": "Retrieve the system hostname/identity."
+        },
+        {
+          "info": {
+            "name": "Update System Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/system/identity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the system hostname."
+        },
+        {
+          "info": {
+            "name": "List System Scripts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/system/script"
+          },
+          "docs": "Retrieve all configured system scripts."
+        },
+        {
+          "info": {
+            "name": "Add System Script",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/system/script",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new system script."
+        },
+        {
+          "info": {
+            "name": "Run System Script",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{routerIP}/rest/system/script/:id/run",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Execute a specific system script."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DHCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List DHCP Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/dhcp-server"
+          },
+          "docs": "Retrieve all DHCP server configurations."
+        },
+        {
+          "info": {
+            "name": "List DHCP Leases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/dhcp-server/lease",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by IP address"
+              },
+              {
+                "name": "dynamic",
+                "value": "",
+                "type": "query",
+                "description": "Filter dynamic leases"
+              }
+            ]
+          },
+          "docs": "Retrieve all DHCP leases including dynamic and static."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DNS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get DNS Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/dns"
+          },
+          "docs": "Retrieve DNS cache settings and configuration."
+        },
+        {
+          "info": {
+            "name": "Update DNS Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/ip/dns",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update DNS server configuration."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bridge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bridges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/bridge"
+          },
+          "docs": "Retrieve all bridge interface configurations."
+        },
+        {
+          "info": {
+            "name": "Add Bridge",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/interface/bridge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new bridge interface."
+        },
+        {
+          "info": {
+            "name": "List Bridge Ports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/bridge/port",
+            "params": [
+              {
+                "name": "bridge",
+                "value": "",
+                "type": "query",
+                "description": "Filter by bridge interface name"
+              }
+            ]
+          },
+          "docs": "Retrieve all bridge port configurations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Wireless",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Wireless Interfaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/wireless"
+          },
+          "docs": "Retrieve all wireless interface configurations."
+        },
+        {
+          "info": {
+            "name": "List Wireless Clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/wireless/registration-table"
+          },
+          "docs": "Retrieve all connected wireless clients from the registration table."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "VPN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List IPsec Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/ipsec/policy"
+          },
+          "docs": "Retrieve all IPsec policy configurations."
+        },
+        {
+          "info": {
+            "name": "List IPsec Peers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/ipsec/peer"
+          },
+          "docs": "Retrieve all IPsec peer configurations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

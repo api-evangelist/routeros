@@ -1,131 +1,95 @@
-# RouterOS
+# RouterOS (routeros)
 
 RouterOS is MikroTik's powerful network operating system designed for managing routers, switches, access points, and other network devices. It provides a comprehensive REST API (v7.1+) and a TCP-based binary API for programmatic management of IP addresses, interfaces, firewall rules, routing, VPN configurations, DHCP, DNS, and system resources. RouterOS powers MikroTik hardware and can also be deployed as a virtual machine (CHR).
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/apis.yml)
 
 ## Scope
 
 - **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
 
 ## Tags
 
-- Networking, Routers, Network Management, Firewall, MikroTik
+- Networking
+- Routers
+- Network Management
+- Firewall
+- MikroTik
 
 ## Timestamps
 
 - **Created:** 2024-11-07
-- **Modified:** 2026-05-02
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### RouterOS REST API
-The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It enables CRUD operations on all router configuration menus via HTTP methods. Accessible at `https://{router-ip}/rest`.
 
-**Human URL:** [https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API](https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API)
+The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It enables create, read, update, and delete operations on all RouterOS configuration menus via standard HTTP methods (GET, PUT, PATCH, DELETE, POST). Authentication uses HTTP Basic Auth with console credentials. Supports filtering, property selection (.proplist), and complex queries. Accessible at https://{router-ip}/rest.
+
+- **Human URL:** [https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API](https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API)
+- **Base URL:** `https://{router-ip}/rest`
 
 #### Tags
 
-- Networking, Router Management, REST API, Network Configuration, Firewall, DHCP, DNS
+- Networking
+- Router Management
+- REST API
+- Network Configuration
+- Firewall
+- DHCP
+- DNS
 
 #### Properties
 
 - [Documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API)
 - [Documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
-- [OpenAPI](openapi/routeros-rest-api-openapi.yml)
-- [SpectralRules](rules/routeros-rules.yml)
-- [NaftikoCapabilities](capabilities/network-management.yaml)
-- [JSONSchema](json-schema/routeros-ip-address-schema.json)
-- [JSONSchema](json-schema/routeros-interface-schema.json)
-- [JSONSchema](json-schema/routeros-firewall-filter-schema.json)
-- [JSONStructure](json-structure/routeros-ip-address-structure.json)
-- [JSONLDContext](json-ld/routeros-context.jsonld)
-- [Example](examples/routeros-list-ip-addresses-example.json)
-- [Example](examples/routeros-list-firewall-filters-example.json)
-- [Example](examples/routeros-get-system-resource-example.json)
-- [Vocabulary](vocabulary/routeros-vocabulary.yml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/openapi/routeros-rest-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json)
+- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld)
+- [Example](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json)
+- [Example](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json)
+- [Example](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml)
+- [Postman Collection](collections/routeros-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/routeros-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### RouterOS TCP API
-The RouterOS TCP API is the native binary protocol running on TCP:8728 (standard) and TCP:8729 (SSL). Sentence-based word protocol supporting tagged concurrent commands, streaming, and cancellation.
 
-**Human URL:** [https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
+The RouterOS TCP API is the native binary protocol for RouterOS, running on TCP port 8728 (standard) and TCP port 8729 (SSL/TLS). It uses a sentence-based word protocol with variable-length encoding, supporting tagged concurrent commands, streaming changes via /listen, and cancellation. Used by most RouterOS client libraries (Python, PHP, Java, Go, etc.).
+
+- **Human URL:** [https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
+- **Base URL:** `tcp://{router-ip}:8728`
 
 #### Tags
 
-- Networking, Router Management, TCP API, Binary Protocol
+- Networking
+- Router Management
+- TCP API
+- Binary Protocol
 
 #### Properties
 
 - [Documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
 - [Documentation](https://wiki.mikrotik.com/wiki/Manual:API)
+- [Postman Collection](collections/routeros-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/routeros-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## Artifacts
+## Common Properties
 
-### OpenAPI Specifications
-
-| File | Description |
-|---|---|
-| [routeros-rest-api-openapi.yml](openapi/routeros-rest-api-openapi.yml) | RouterOS REST API — IP, interfaces, firewall, routing, system, DHCP, DNS, wireless |
-
-### Spectral Rules
-
-| File | Description |
-|---|---|
-| [routeros-rules.yml](rules/routeros-rules.yml) | Spectral ruleset enforcing RouterOS API conventions |
-
-### Capabilities
-
-| File | Description |
-|---|---|
-| [network-management.yaml](capabilities/network-management.yaml) | Unified network management workflow — IP, firewall, routing, DHCP, DNS, wireless (14 tools) |
-| [shared/routeros-rest.yaml](capabilities/shared/routeros-rest.yaml) | Shared per-API definition for RouterOS REST API |
-
-### JSON Schema
-
-| File | Description |
-|---|---|
-| [routeros-ip-address-schema.json](json-schema/routeros-ip-address-schema.json) | IP address resource schema |
-| [routeros-interface-schema.json](json-schema/routeros-interface-schema.json) | Network interface resource schema |
-| [routeros-firewall-filter-schema.json](json-schema/routeros-firewall-filter-schema.json) | Firewall filter rule schema |
-
-### JSON Structure
-
-| File | Description |
-|---|---|
-| [routeros-ip-address-structure.json](json-structure/routeros-ip-address-structure.json) | IP address field documentation |
-
-### JSON-LD
-
-| File | Description |
-|---|---|
-| [routeros-context.jsonld](json-ld/routeros-context.jsonld) | JSON-LD context mapping RouterOS vocabulary to schema.org |
-
-### Examples
-
-| File | Description |
-|---|---|
-| [routeros-list-ip-addresses-example.json](examples/routeros-list-ip-addresses-example.json) | List IP addresses request/response |
-| [routeros-list-firewall-filters-example.json](examples/routeros-list-firewall-filters-example.json) | List firewall filter rules request/response |
-| [routeros-get-system-resource-example.json](examples/routeros-get-system-resource-example.json) | Get system resources request/response |
-
-### Vocabulary
-
-| File | Description |
-|---|---|
-| [routeros-vocabulary.yml](vocabulary/routeros-vocabulary.yml) | RouterOS domain terminology — interfaces, firewall, routing, VPN, API |
-
-## Resources
-
-- **Website:** https://mikrotik.com
-- **Documentation:** https://help.mikrotik.com/docs/spaces/ROS
-- **GitHub:** https://github.com/mikrotik
-- **Forum:** https://forum.mikrotik.com
-- **Wiki:** https://wiki.mikrotik.com
+- [Website](https://mikrotik.com)
+- [Documentation](https://help.mikrotik.com/docs/spaces/ROS)
+- [Git Hub Org](https://github.com/mikrotik)
+- [Forum](https://forum.mikrotik.com)
+- [Wiki](https://wiki.mikrotik.com)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml)
+- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com
