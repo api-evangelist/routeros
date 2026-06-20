@@ -6,7 +6,7 @@ description: >-
   management of IP addresses, interfaces, firewall rules, routing, VPN configurations, DHCP, DNS, and system resources.
   RouterOS powers MikroTik hardware and can also be deployed as a virtual machine (CHR).
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Networking
   - Routers
