@@ -62,13 +62,13 @@ apis:
         type: JSONLDContext
       - url: >-
           https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
-        type: Example
+        type: Examples
       - url: >-
           https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
-        type: Example
+        type: Examples
       - url: >-
           https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
-        type: Example
+        type: Examples
       - url: https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
         type: Vocabulary
     contact:
@@ -101,7 +101,7 @@ common:
     url: https://help.mikrotik.com/docs/spaces/ROS
   - type: GitHubOrg
     url: https://github.com/mikrotik
-  - type: Forum
+  - type: Forums
     url: https://forum.mikrotik.com
   - type: Wiki
     url: https://wiki.mikrotik.com
