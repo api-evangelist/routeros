@@ -95,6 +95,12 @@ apis:
       - url: https://wiki.mikrotik.com/wiki/Manual:API
         type: Documentation
 common:
+  - type: VulnerabilityDisclosure
+    url: security/routeros-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/routeros-domain-security.yml
+  - type: Authentication
+    url: authentication/routeros-authentication.yml
   - type: Website
     url: https://mikrotik.com
   - type: Documentation
