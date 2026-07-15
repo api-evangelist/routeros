@@ -95,6 +95,8 @@ apis:
       - url: https://wiki.mikrotik.com/wiki/Manual:API
         type: Documentation
 common:
+  - type: AgenticAccess
+    url: agentic-access/routeros-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/routeros-vulnerability-disclosure.yml
   - type: DomainSecurity
