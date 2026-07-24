@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge DNS API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: DNS
+  description: DNS cache and configuration
+paths:
+  /ip/dns:
+    get:
+      operationId: getDnsSettings
+      summary: Get DNS Settings
+      description: Retrieve DNS cache settings and configuration.
+      tags:
+      - DNS
+      responses:
+        '200':
+          description: DNS settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsSettings'
+    patch:
+      operationId: updateDnsSettings
+      summary: Update DNS Settings
+      description: Update DNS server configuration.
+      tags:
+      - DNS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DnsSettingsUpdate'
+      responses:
+        '200':
+          description: DNS settings updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsSettings'
+components:
+  schemas:
+    DnsSettingsUpdate:
+      type: object
+      properties:
+        servers:
+          type: string
+        allow-remote-requests:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        cache-size:
+          type: string
+        cache-max-ttl:
+          type: string
+    DnsSettings:
+      type: object
+      description: RouterOS DNS settings
+      properties:
+        servers:
+          type: string
+          description: Comma-separated DNS server IPs
+          example: 8.8.8.8,1.1.1.1
+        dynamic-servers:
+          type: string
+        allow-remote-requests:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        max-udp-packet-size:
+          type: string
+        query-server-timeout:
+          type: string
+        query-total-timeout:
+          type: string
+        cache-size:
+          type: string
+        cache-max-ttl:
+          type: string
+        cache-used:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

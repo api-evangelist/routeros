@@ -1,0 +1,231 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge System API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: System
+  description: System information, identity, and scripts
+paths:
+  /system/resource:
+    get:
+      operationId: getSystemResource
+      summary: Get System Resources
+      description: Retrieve system resource information including CPU load, memory usage, uptime, RouterOS version, and hardware details.
+      tags:
+      - System
+      responses:
+        '200':
+          description: System resource information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemResource'
+  /system/identity:
+    get:
+      operationId: getSystemIdentity
+      summary: Get System Identity
+      description: Retrieve the system hostname/identity.
+      tags:
+      - System
+      responses:
+        '200':
+          description: System identity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemIdentity'
+    patch:
+      operationId: updateSystemIdentity
+      summary: Update System Identity
+      description: Update the system hostname.
+      tags:
+      - System
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemIdentity'
+      responses:
+        '200':
+          description: System identity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemIdentity'
+  /system/script:
+    get:
+      operationId: listSystemScripts
+      summary: List System Scripts
+      description: Retrieve all configured system scripts.
+      tags:
+      - System
+      responses:
+        '200':
+          description: List of scripts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Script'
+    put:
+      operationId: addSystemScript
+      summary: Add System Script
+      description: Create a new system script.
+      tags:
+      - System
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScriptCreate'
+      responses:
+        '201':
+          description: Script created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Script'
+  /system/script/{id}/run:
+    post:
+      operationId: runSystemScript
+      summary: Run System Script
+      description: Execute a specific system script.
+      tags:
+      - System
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: Script executed
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    Script:
+      type: object
+      description: RouterOS system script
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+          description: Script name
+        owner:
+          type: string
+          description: Script owner username
+        policy:
+          type: string
+          description: Allowed policies
+        dont-require-permissions:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        source:
+          type: string
+          description: Script source code
+        last-started:
+          type: string
+        run-count:
+          type: string
+        comment:
+          type: string
+    ScriptCreate:
+      type: object
+      required:
+      - name
+      - source
+      properties:
+        name:
+          type: string
+        source:
+          type: string
+        policy:
+          type: string
+        comment:
+          type: string
+    SystemIdentity:
+      type: object
+      description: RouterOS system identity/hostname
+      properties:
+        name:
+          type: string
+          description: System hostname
+          example: MikroTik
+    SystemResource:
+      type: object
+      description: RouterOS system resource information
+      properties:
+        uptime:
+          type: string
+          description: System uptime
+          example: 1d2h3m4s
+        version:
+          type: string
+          description: RouterOS version
+          example: 7.15.1
+        build-time:
+          type: string
+          description: RouterOS build timestamp
+        free-memory:
+          type: string
+          description: Available memory in bytes
+        total-memory:
+          type: string
+          description: Total memory in bytes
+        cpu:
+          type: string
+          description: CPU model
+        cpu-count:
+          type: string
+          description: Number of CPU cores
+        cpu-load:
+          type: string
+          description: Current CPU load percentage
+        free-hdd-space:
+          type: string
+          description: Available storage in bytes
+        total-hdd-space:
+          type: string
+          description: Total storage in bytes
+        architecture-name:
+          type: string
+          description: CPU architecture
+        board-name:
+          type: string
+          description: Hardware board model
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

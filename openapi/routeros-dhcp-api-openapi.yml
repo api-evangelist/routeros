@@ -1,0 +1,131 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge DHCP API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: DHCP
+  description: DHCP server and client management
+paths:
+  /ip/dhcp-server:
+    get:
+      operationId: listDhcpServers
+      summary: List DHCP Servers
+      description: Retrieve all DHCP server configurations.
+      tags:
+      - DHCP
+      responses:
+        '200':
+          description: List of DHCP servers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DhcpServer'
+  /ip/dhcp-server/lease:
+    get:
+      operationId: listDhcpLeases
+      summary: List DHCP Leases
+      description: Retrieve all DHCP leases including dynamic and static.
+      tags:
+      - DHCP
+      parameters:
+      - name: address
+        in: query
+        description: Filter by IP address
+        schema:
+          type: string
+      - name: dynamic
+        in: query
+        description: Filter dynamic leases
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: List of DHCP leases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DhcpLease'
+components:
+  schemas:
+    DhcpLease:
+      type: object
+      description: RouterOS DHCP lease
+      properties:
+        .id:
+          type: string
+        address:
+          type: string
+          description: Assigned IP address
+        mac-address:
+          type: string
+          description: Client MAC address
+        client-id:
+          type: string
+        hostname:
+          type: string
+        expires-after:
+          type: string
+        dynamic:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        active:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        status:
+          type: string
+          enum:
+          - waiting
+          - testing
+          - bound
+          - offered
+    DhcpServer:
+      type: object
+      description: RouterOS DHCP server configuration
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+        interface:
+          type: string
+        address-pool:
+          type: string
+        lease-time:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

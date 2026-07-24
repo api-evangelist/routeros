@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: Bridge
+  description: Bridge interface management
+paths:
+  /interface/bridge:
+    get:
+      operationId: listBridges
+      summary: List Bridges
+      description: Retrieve all bridge interface configurations.
+      tags:
+      - Bridge
+      responses:
+        '200':
+          description: List of bridges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bridge'
+    put:
+      operationId: addBridge
+      summary: Add Bridge
+      description: Create a new bridge interface.
+      tags:
+      - Bridge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BridgeCreate'
+      responses:
+        '201':
+          description: Bridge created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bridge'
+  /interface/bridge/port:
+    get:
+      operationId: listBridgePorts
+      summary: List Bridge Ports
+      description: Retrieve all bridge port configurations.
+      tags:
+      - Bridge
+      parameters:
+      - name: bridge
+        in: query
+        description: Filter by bridge interface name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of bridge ports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BridgePort'
+components:
+  schemas:
+    BridgeCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        comment:
+          type: string
+    BridgePort:
+      type: object
+      description: RouterOS bridge port
+      properties:
+        .id:
+          type: string
+        interface:
+          type: string
+          description: Physical interface to add to bridge
+        bridge:
+          type: string
+          description: Bridge interface name
+        hw:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+    Bridge:
+      type: object
+      description: RouterOS bridge interface
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+          description: Bridge interface name
+          example: bridge1
+        mtu:
+          type: string
+        mac-address:
+          type: string
+        running:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

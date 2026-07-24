@@ -1,0 +1,237 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge IP Address API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: IP Address
+  description: IP address configuration and management
+paths:
+  /ip/address:
+    get:
+      operationId: listIpAddresses
+      summary: List IP Addresses
+      description: Retrieve all IP address configurations on the device.
+      tags:
+      - IP Address
+      parameters:
+      - name: .proplist
+        in: query
+        description: Comma-separated list of properties to return
+        schema:
+          type: string
+        example: address,interface,network
+      - name: interface
+        in: query
+        description: Filter by interface name
+        schema:
+          type: string
+      - name: dynamic
+        in: query
+        description: Filter by dynamic flag
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: List of IP addresses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpAddress'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: addIpAddress
+      summary: Add IP Address
+      description: Add a new IP address to an interface.
+      tags:
+      - IP Address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpAddressCreate'
+      responses:
+        '201':
+          description: IP address created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddress'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /ip/address/{id}:
+    get:
+      operationId: getIpAddress
+      summary: Get IP Address
+      description: Retrieve a specific IP address by ID.
+      tags:
+      - IP Address
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: IP address details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddress'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateIpAddress
+      summary: Update IP Address
+      description: Modify an existing IP address configuration.
+      tags:
+      - IP Address
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IpAddressCreate'
+      responses:
+        '200':
+          description: IP address updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpAddress'
+    delete:
+      operationId: deleteIpAddress
+      summary: Delete IP Address
+      description: Remove an IP address from an interface.
+      tags:
+      - IP Address
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '204':
+          description: IP address deleted
+components:
+  schemas:
+    IpAddressCreate:
+      type: object
+      required:
+      - address
+      - interface
+      properties:
+        address:
+          type: string
+          description: IP address with prefix length (CIDR notation)
+          example: 192.168.1.1/24
+        interface:
+          type: string
+          description: Interface name to assign address to
+          example: ether1
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    IpAddress:
+      type: object
+      description: RouterOS IP address configuration
+      properties:
+        .id:
+          type: string
+          description: Internal RouterOS record ID
+          example: '*1'
+        address:
+          type: string
+          description: IP address with prefix length (CIDR notation)
+          example: 192.168.1.1/24
+        network:
+          type: string
+          description: Network address
+          example: 192.168.1.0
+        interface:
+          type: string
+          description: Interface name this address is assigned to
+          example: ether1
+        dynamic:
+          type: string
+          description: Whether the address is dynamically assigned
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          description: Whether the address is disabled
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+          description: Optional comment
+    Error:
+      type: object
+      description: API error response
+      properties:
+        detail:
+          type: string
+          description: Error message
+          example: no such item
+        error:
+          type: integer
+          description: Error code
+  responses:
+    Unauthorized:
+      description: Authentication required or credentials invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

@@ -1,0 +1,157 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge Interface API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: Interface
+  description: Network interface management
+paths:
+  /interface:
+    get:
+      operationId: listInterfaces
+      summary: List Interfaces
+      description: Retrieve all network interfaces on the device.
+      tags:
+      - Interface
+      parameters:
+      - name: type
+        in: query
+        description: Filter by interface type (ether, bridge, vlan, etc.)
+        schema:
+          type: string
+      - name: running
+        in: query
+        description: Filter by running state
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: List of interfaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Interface'
+  /interface/{id}:
+    get:
+      operationId: getInterface
+      summary: Get Interface
+      description: Retrieve a specific interface by ID.
+      tags:
+      - Interface
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: Interface details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interface'
+    patch:
+      operationId: updateInterface
+      summary: Update Interface
+      description: Modify an existing interface configuration.
+      tags:
+      - Interface
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterfaceUpdate'
+      responses:
+        '200':
+          description: Interface updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interface'
+components:
+  schemas:
+    InterfaceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        mtu:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    Interface:
+      type: object
+      description: RouterOS network interface
+      properties:
+        .id:
+          type: string
+          description: Internal RouterOS record ID
+        name:
+          type: string
+          description: Interface name
+          example: ether1
+        type:
+          type: string
+          description: Interface type (ether, bridge, vlan, pppoe, etc.)
+          example: ether
+        mtu:
+          type: string
+          description: Maximum transmission unit
+          example: '1500'
+        mac-address:
+          type: string
+          description: MAC address
+          example: AA:BB:CC:DD:EE:FF
+        running:
+          type: string
+          description: Whether the interface is running
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

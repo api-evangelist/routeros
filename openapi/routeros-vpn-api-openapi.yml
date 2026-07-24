@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge VPN API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: VPN
+  description: VPN tunnels and configurations
+paths:
+  /ip/ipsec/policy:
+    get:
+      operationId: listIpsecPolicies
+      summary: List IPsec Policies
+      description: Retrieve all IPsec policy configurations.
+      tags:
+      - VPN
+      responses:
+        '200':
+          description: List of IPsec policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpsecPolicy'
+  /ip/ipsec/peer:
+    get:
+      operationId: listIpsecPeers
+      summary: List IPsec Peers
+      description: Retrieve all IPsec peer configurations.
+      tags:
+      - VPN
+      responses:
+        '200':
+          description: List of IPsec peers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IpsecPeer'
+components:
+  schemas:
+    IpsecPeer:
+      type: object
+      description: RouterOS IPsec peer configuration
+      properties:
+        .id:
+          type: string
+        address:
+          type: string
+          description: Peer IP address
+        auth-method:
+          type: string
+        exchange-mode:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    IpsecPolicy:
+      type: object
+      description: RouterOS IPsec policy
+      properties:
+        .id:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        action:
+          type: string
+        tunnel:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

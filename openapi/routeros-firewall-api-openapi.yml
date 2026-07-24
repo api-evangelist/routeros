@@ -1,0 +1,356 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge Firewall API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: Firewall
+  description: Firewall rules, NAT, and address lists
+paths:
+  /ip/firewall/filter:
+    get:
+      operationId: listFirewallFilters
+      summary: List Firewall Filter Rules
+      description: Retrieve all firewall filter rules.
+      tags:
+      - Firewall
+      parameters:
+      - name: chain
+        in: query
+        description: Filter by chain (input, forward, output)
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: Filter by action (accept, drop, reject)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of firewall filter rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FirewallFilter'
+    put:
+      operationId: addFirewallFilter
+      summary: Add Firewall Filter Rule
+      description: Add a new firewall filter rule.
+      tags:
+      - Firewall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallFilterCreate'
+      responses:
+        '201':
+          description: Firewall filter rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallFilter'
+  /ip/firewall/filter/{id}:
+    patch:
+      operationId: updateFirewallFilter
+      summary: Update Firewall Filter Rule
+      description: Modify an existing firewall filter rule.
+      tags:
+      - Firewall
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallFilterCreate'
+      responses:
+        '200':
+          description: Firewall filter rule updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallFilter'
+    delete:
+      operationId: deleteFirewallFilter
+      summary: Delete Firewall Filter Rule
+      description: Remove a firewall filter rule.
+      tags:
+      - Firewall
+      parameters:
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '204':
+          description: Firewall filter rule deleted
+  /ip/firewall/nat:
+    get:
+      operationId: listFirewallNat
+      summary: List Firewall NAT Rules
+      description: Retrieve all firewall NAT rules.
+      tags:
+      - Firewall
+      parameters:
+      - name: chain
+        in: query
+        description: Filter by chain (srcnat, dstnat)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of NAT rules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FirewallNat'
+    put:
+      operationId: addFirewallNat
+      summary: Add Firewall NAT Rule
+      description: Add a new NAT rule.
+      tags:
+      - Firewall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FirewallNatCreate'
+      responses:
+        '201':
+          description: NAT rule created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallNat'
+  /ip/firewall/address-list:
+    get:
+      operationId: listFirewallAddressLists
+      summary: List Firewall Address Lists
+      description: Retrieve all firewall address list entries.
+      tags:
+      - Firewall
+      parameters:
+      - name: list
+        in: query
+        description: Filter by list name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of address list entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddressList'
+    put:
+      operationId: addFirewallAddressListEntry
+      summary: Add Firewall Address List Entry
+      description: Add an IP address to a named address list.
+      tags:
+      - Firewall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressListCreate'
+      responses:
+        '201':
+          description: Address list entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressList'
+components:
+  schemas:
+    FirewallNat:
+      type: object
+      description: RouterOS NAT rule
+      properties:
+        .id:
+          type: string
+        chain:
+          type: string
+          description: NAT chain (srcnat, dstnat)
+          example: srcnat
+        action:
+          type: string
+          description: NAT action (masquerade, src-nat, dst-nat, etc.)
+          example: masquerade
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        out-interface:
+          type: string
+        to-addresses:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    AddressListCreate:
+      type: object
+      required:
+      - list
+      - address
+      properties:
+        list:
+          type: string
+        address:
+          type: string
+        comment:
+          type: string
+        timeout:
+          type: string
+    FirewallNatCreate:
+      type: object
+      required:
+      - chain
+      - action
+      properties:
+        chain:
+          type: string
+        action:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        out-interface:
+          type: string
+        to-addresses:
+          type: string
+        comment:
+          type: string
+    FirewallFilter:
+      type: object
+      description: RouterOS firewall filter rule
+      properties:
+        .id:
+          type: string
+        chain:
+          type: string
+          description: Firewall chain (input, forward, output)
+          example: forward
+        action:
+          type: string
+          description: Rule action (accept, drop, reject, log, etc.)
+          example: accept
+        src-address:
+          type: string
+          description: Source IP address or range
+        dst-address:
+          type: string
+          description: Destination IP address or range
+        protocol:
+          type: string
+          description: Network protocol (tcp, udp, icmp, etc.)
+        in-interface:
+          type: string
+          description: Incoming interface
+        out-interface:
+          type: string
+          description: Outgoing interface
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    FirewallFilterCreate:
+      type: object
+      required:
+      - chain
+      - action
+      properties:
+        chain:
+          type: string
+        action:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        protocol:
+          type: string
+        in-interface:
+          type: string
+        out-interface:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    AddressList:
+      type: object
+      description: RouterOS firewall address list entry
+      properties:
+        .id:
+          type: string
+        list:
+          type: string
+          description: Address list name
+          example: blocked
+        address:
+          type: string
+          description: IP address or range
+          example: 10.0.0.1
+        dynamic:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+        timeout:
+          type: string
+          description: Optional expiry timeout
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

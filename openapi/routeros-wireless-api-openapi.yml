@@ -1,0 +1,122 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge Wireless API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: Wireless
+  description: Wireless interface and station management
+paths:
+  /interface/wireless:
+    get:
+      operationId: listWirelessInterfaces
+      summary: List Wireless Interfaces
+      description: Retrieve all wireless interface configurations.
+      tags:
+      - Wireless
+      responses:
+        '200':
+          description: List of wireless interfaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WirelessInterface'
+  /interface/wireless/registration-table:
+    get:
+      operationId: listWirelessClients
+      summary: List Wireless Clients
+      description: Retrieve all connected wireless clients from the registration table.
+      tags:
+      - Wireless
+      responses:
+        '200':
+          description: List of connected wireless clients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WirelessClient'
+components:
+  schemas:
+    WirelessInterface:
+      type: object
+      description: RouterOS wireless interface configuration
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+        mode:
+          type: string
+          description: Mode (ap-bridge, station, station-roam, etc.)
+          example: ap-bridge
+        ssid:
+          type: string
+          description: Wireless SSID
+        band:
+          type: string
+          description: Frequency band (2ghz-b/g/n, 5ghz-a/n/ac, etc.)
+        channel-width:
+          type: string
+        frequency:
+          type: string
+        mac-address:
+          type: string
+        running:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+    WirelessClient:
+      type: object
+      description: Connected wireless client from registration table
+      properties:
+        .id:
+          type: string
+        interface:
+          type: string
+        mac-address:
+          type: string
+          description: Client MAC address
+        ap-tx-rate:
+          type: string
+        tx-rate:
+          type: string
+        rx-rate:
+          type: string
+        signal-strength:
+          type: string
+        signal-to-noise:
+          type: string
+        uptime:
+          type: string
+        last-activity:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials

@@ -1,0 +1,129 @@
+openapi: 3.1.0
+info:
+  title: RouterOS REST Bridge Routing API
+  description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
+  version: 7.1+
+  contact:
+    name: MikroTik Support
+    url: https://mikrotik.com/support
+  license:
+    name: Proprietary
+    url: https://mikrotik.com
+servers:
+- url: https://{routerIP}/rest
+  description: RouterOS REST API (HTTPS recommended)
+  variables:
+    routerIP:
+      default: 192.168.88.1
+      description: IP address of the RouterOS device
+security:
+- basicAuth: []
+tags:
+- name: Routing
+  description: Routing tables, BGP, OSPF, and static routes
+paths:
+  /ip/route:
+    get:
+      operationId: listRoutes
+      summary: List Routes
+      description: Retrieve the routing table.
+      tags:
+      - Routing
+      parameters:
+      - name: dst-address
+        in: query
+        description: Filter by destination address
+        schema:
+          type: string
+      - name: active
+        in: query
+        description: Filter by active routes
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      responses:
+        '200':
+          description: List of routes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Route'
+    put:
+      operationId: addRoute
+      summary: Add Static Route
+      description: Add a new static route.
+      tags:
+      - Routing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RouteCreate'
+      responses:
+        '201':
+          description: Route created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+components:
+  schemas:
+    RouteCreate:
+      type: object
+      required:
+      - dst-address
+      - gateway
+      properties:
+        dst-address:
+          type: string
+        gateway:
+          type: string
+        distance:
+          type: string
+        comment:
+          type: string
+    Route:
+      type: object
+      description: RouterOS routing table entry
+      properties:
+        .id:
+          type: string
+        dst-address:
+          type: string
+          description: Destination network in CIDR notation
+          example: 0.0.0.0/0
+        gateway:
+          type: string
+          description: Next-hop gateway IP address
+          example: 192.168.1.254
+        pref-src:
+          type: string
+          description: Preferred source address
+        distance:
+          type: string
+          description: Route administrative distance
+        routing-table:
+          type: string
+          description: Routing table (main or custom)
+        active:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        dynamic:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth using RouterOS console credentials
