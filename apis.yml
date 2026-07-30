@@ -6,7 +6,20 @@ description: >-
   management of IP addresses, interfaces, firewall rules, routing, VPN configurations, DHCP, DNS, and system resources.
   RouterOS powers MikroTik hardware and can also be deployed as a virtual machine (CHR).
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/routeros.png
 tags:
   - Networking
   - Routers
@@ -18,82 +31,466 @@ created: '2024-11-07'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: routeros:routeros-rest-api
-    name: RouterOS REST API
-    description: >-
-      The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It
-      enables create, read, update, and delete operations on all RouterOS configuration menus via standard HTTP methods
-      (GET, PUT, PATCH, DELETE, POST). Authentication uses HTTP Basic Auth with console credentials. Supports filtering,
-      property selection (.proplist), and complex queries. Accessible at https://{router-ip}/rest.
-    humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
-    baseURL: https://{router-ip}/rest
-    version: 7.1+
-    tags:
-      - Networking
-      - Router Management
-      - REST API
-      - Network Configuration
-      - Firewall
-      - DHCP
-      - DNS
-    properties:
-      - url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
-        type: Documentation
-      - url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
-        type: Documentation
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/openapi/routeros-rest-api-openapi.yml
-        type: OpenAPI
-      - url: https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
-        type: SpectralRules
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
-        type: JSONSchema
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
-        type: JSONSchema
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
-        type: JSONSchema
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
-        type: JSONStructure
-      - url: https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
-        type: JSONLDContext
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
-        type: Examples
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
-        type: Examples
-      - url: >-
-          https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
-        type: Examples
-      - url: https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
-        type: Vocabulary
-    contact:
-      - FN: MikroTik Support
-        url: https://mikrotik.com/support
-  - aid: routeros:routeros-tcp-api
-    name: RouterOS TCP API
-    description: >-
-      The RouterOS TCP API is the native binary protocol for RouterOS, running on TCP port 8728 (standard) and TCP port
-      8729 (SSL/TLS). It uses a sentence-based word protocol with variable-length encoding, supporting tagged concurrent
-      commands, streaming changes via /listen, and cancellation. Used by most RouterOS client libraries (Python, PHP,
-      Java, Go, etc.).
-    humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
-    baseURL: tcp://{router-ip}:8728
-    version: 6.43+
-    tags:
-      - Networking
-      - Router Management
-      - TCP API
-      - Binary Protocol
-    properties:
-      - url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
-        type: Documentation
-      - url: https://wiki.mikrotik.com/wiki/Manual:API
-        type: Documentation
+- aid: routeros:routeros-tcp-api
+  name: RouterOS TCP API
+  description: >-
+    The RouterOS TCP API is the native binary protocol for RouterOS, running on TCP port 8728 (standard)
+    and TCP port 8729 (SSL/TLS). It uses a sentence-based word protocol with variable-length encoding,
+    supporting tagged concurrent commands, streaming changes via /listen, and cancellation. Used by most
+    RouterOS client libraries (Python, PHP, Java, Go, etc.).
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  baseURL: tcp://{router-ip}:8728
+  version: 6.43+
+  tags:
+  - Networking
+  - Router Management
+  - TCP API
+  - Binary Protocol
+  properties:
+  - url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+    type: Documentation
+  - url: https://wiki.mikrotik.com/wiki/Manual:API
+    type: Documentation
+- aid: routeros:routeros-bridge-api
+  name: RouterOS Bridge API
+  description: Bridge interface management
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - Bridge
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-bridge-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-dhcp-api
+  name: RouterOS DHCP API
+  description: DHCP server and client management
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - DHCP
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-dhcp-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-dns-api
+  name: RouterOS DNS API
+  description: DNS cache and configuration
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - DNS
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-dns-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-firewall-api
+  name: RouterOS Firewall API
+  description: Firewall rules, NAT, and address lists
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - Firewall
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-firewall-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-interface-api
+  name: RouterOS Interface API
+  description: Network interface management
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - Interface
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-interface-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-ip-address-api
+  name: RouterOS IP Address API
+  description: IP address configuration and management
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - IP Address
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-ip-address-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-routing-api
+  name: RouterOS Routing API
+  description: Routing tables, BGP, OSPF, and static routes
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - Routing
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-routing-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-system-api
+  name: RouterOS System API
+  description: System information, identity, and scripts
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-system-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-vpn-api
+  name: RouterOS VPN API
+  description: VPN tunnels and configurations
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - VPN
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-vpn-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
+- aid: routeros:routeros-wireless-api
+  name: RouterOS Wireless API
+  description: Wireless interface and station management
+  humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  baseURL: https://{router-ip}/rest
+  tags:
+  - Wireless
+  properties:
+  - type: OpenAPI
+    url: openapi/routeros-wireless-api-openapi.yml
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
+  - type: Documentation
+    url: https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json
+  - type: JSONStructure
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json
+  - type: JSONLDContext
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json
+  - type: Examples
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
 common:
   - type: AgenticAccess
     url: agentic-access/routeros-agentic-access.yml
