@@ -1,0 +1,32 @@
+{
+  "provider": "routeros",
+  "sources": [
+    "routeros-bridge-api-openapi.yml",
+    "routeros-dhcp-api-openapi.yml",
+    "routeros-dns-api-openapi.yml",
+    "routeros-firewall-api-openapi.yml",
+    "routeros-interface-api-openapi.yml",
+    "routeros-ip-address-api-openapi.yml",
+    "routeros-routing-api-openapi.yml",
+    "routeros-system-api-openapi.yml",
+    "routeros-vpn-api-openapi.yml",
+    "routeros-wireless-api-openapi.yml"
+  ],
+  "outputs": [
+    "routeros-bridge-api-openapi.yml",
+    "routeros-dhcp-api-openapi.yml",
+    "routeros-dns-api-openapi.yml",
+    "routeros-firewall-api-openapi.yml",
+    "routeros-interface-api-openapi.yml",
+    "routeros-ip-address-api-openapi.yml",
+    "routeros-routing-api-openapi.yml",
+    "routeros-system-api-openapi.yml",
+    "routeros-vpn-api-openapi.yml",
+    "routeros-wireless-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
