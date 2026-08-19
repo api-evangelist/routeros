@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge IP Address API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "IP Address",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List IP Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/address",
+            "params": [
+              {
+                "name": ".proplist",
+                "value": "address,interface,network",
+                "type": "query",
+                "description": "Comma-separated list of properties to return"
+              },
+              {
+                "name": "interface",
+                "value": "",
+                "type": "query",
+                "description": "Filter by interface name"
+              },
+              {
+                "name": "dynamic",
+                "value": "",
+                "type": "query",
+                "description": "Filter by dynamic flag"
+              }
+            ]
+          },
+          "docs": "Retrieve all IP address configurations on the device."
+        },
+        {
+          "info": {
+            "name": "Add IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/address",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new IP address to an interface."
+        },
+        {
+          "info": {
+            "name": "Get IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/address/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific IP address by ID."
+        },
+        {
+          "info": {
+            "name": "Update IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/ip/address/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an existing IP address configuration."
+        },
+        {
+          "info": {
+            "name": "Delete IP Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{routerIP}/rest/ip/address/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Remove an IP address from an interface."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

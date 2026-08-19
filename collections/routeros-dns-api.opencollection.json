@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge DNS API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DNS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get DNS Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/dns"
+          },
+          "docs": "Retrieve DNS cache settings and configuration."
+        },
+        {
+          "info": {
+            "name": "Update DNS Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/ip/dns",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update DNS server configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

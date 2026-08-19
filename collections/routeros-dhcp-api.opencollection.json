@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge DHCP API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DHCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List DHCP Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/dhcp-server"
+          },
+          "docs": "Retrieve all DHCP server configurations."
+        },
+        {
+          "info": {
+            "name": "List DHCP Leases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/dhcp-server/lease",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by IP address"
+              },
+              {
+                "name": "dynamic",
+                "value": "",
+                "type": "query",
+                "description": "Filter dynamic leases"
+              }
+            ]
+          },
+          "docs": "Retrieve all DHCP leases including dynamic and static."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

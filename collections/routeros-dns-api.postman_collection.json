@@ -1,0 +1,263 @@
+{
+  "item": [
+    {
+      "id": "6f4c64da-af37-44cf-a089-7aa39b5f3450",
+      "name": "DNS",
+      "description": {
+        "content": "DNS cache and configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04ec0842-aef5-4c4d-b235-7b4c7d3514ac",
+          "name": "Get DNS Settings",
+          "request": {
+            "name": "Get DNS Settings",
+            "description": {
+              "content": "Retrieve DNS cache settings and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "dns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "074a2c70-8c22-46d9-92f5-da145d15781c",
+              "name": "DNS settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "dns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"servers\": \"8.8.8.8,1.1.1.1\",\n  \"dynamic-servers\": \"string\",\n  \"allow-remote-requests\": \"false\",\n  \"max-udp-packet-size\": \"string\",\n  \"query-server-timeout\": \"string\",\n  \"query-total-timeout\": \"string\",\n  \"cache-size\": \"string\",\n  \"cache-max-ttl\": \"string\",\n  \"cache-used\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d90b6a2-cd37-4eeb-82bb-7e7458340e58",
+          "name": "Update DNS Settings",
+          "request": {
+            "name": "Update DNS Settings",
+            "description": {
+              "content": "Update DNS server configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "dns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"servers\": \"<string>\",\n  \"allow-remote-requests\": \"<string>\",\n  \"cache-size\": \"<string>\",\n  \"cache-max-ttl\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b8291b24-f7bf-4229-9e84-c401b19dac5c",
+              "name": "DNS settings updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "dns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"servers\": \"<string>\",\n  \"allow-remote-requests\": \"<string>\",\n  \"cache-size\": \"<string>\",\n  \"cache-max-ttl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"servers\": \"8.8.8.8,1.1.1.1\",\n  \"dynamic-servers\": \"string\",\n  \"allow-remote-requests\": \"false\",\n  \"max-udp-packet-size\": \"string\",\n  \"query-server-timeout\": \"string\",\n  \"query-total-timeout\": \"string\",\n  \"cache-size\": \"string\",\n  \"cache-max-ttl\": \"string\",\n  \"cache-used\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3a429364-46fa-4bd2-aed7-d499c445648f",
+    "name": "RouterOS REST Bridge DNS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}

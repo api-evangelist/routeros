@@ -1,0 +1,285 @@
+{
+  "item": [
+    {
+      "id": "2808e988-ddee-4c8e-b01d-dcf5c2bbd63d",
+      "name": "Routing",
+      "description": {
+        "content": "Routing tables, BGP, OSPF, and static routes",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "49ba22f1-adfc-428f-8a4d-50bc17d08226",
+          "name": "List Routes",
+          "request": {
+            "name": "List Routes",
+            "description": {
+              "content": "Retrieve the routing table.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "route"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "dst-address",
+                  "value": "<string>",
+                  "description": "Filter by destination address"
+                },
+                {
+                  "disabled": false,
+                  "key": "active",
+                  "value": "<string>",
+                  "description": "Filter by active routes"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b080b2ba-ec19-4cb4-957f-c23d6cfddd45",
+              "name": "List of routes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dst-address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "active",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"dst-address\": \"0.0.0.0/0\",\n    \"gateway\": \"192.168.1.254\",\n    \"pref-src\": \"string\",\n    \"distance\": \"string\",\n    \"routing-table\": \"string\",\n    \"active\": \"true\",\n    \"dynamic\": \"false\",\n    \"comment\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"dst-address\": \"0.0.0.0/0\",\n    \"gateway\": \"192.168.1.254\",\n    \"pref-src\": \"string\",\n    \"distance\": \"string\",\n    \"routing-table\": \"string\",\n    \"active\": \"true\",\n    \"dynamic\": \"true\",\n    \"comment\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2851c9b5-f2f5-4785-afe2-9d4656e3a769",
+          "name": "Add Static Route",
+          "request": {
+            "name": "Add Static Route",
+            "description": {
+              "content": "Add a new static route.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "route"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dst-address\": \"<string>\",\n  \"gateway\": \"<string>\",\n  \"distance\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2004bfa2-a804-487c-9df0-54029956edf1",
+              "name": "Route created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dst-address\": \"<string>\",\n  \"gateway\": \"<string>\",\n  \"distance\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \".id\": \"string\",\n  \"dst-address\": \"0.0.0.0/0\",\n  \"gateway\": \"192.168.1.254\",\n  \"pref-src\": \"string\",\n  \"distance\": \"string\",\n  \"routing-table\": \"string\",\n  \"active\": \"true\",\n  \"dynamic\": \"true\",\n  \"comment\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1b0e0279-5056-4f6f-81f6-1917ee56e319",
+    "name": "RouterOS REST Bridge Routing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}

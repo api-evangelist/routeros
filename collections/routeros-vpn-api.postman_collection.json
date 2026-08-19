@@ -1,0 +1,246 @@
+{
+  "item": [
+    {
+      "id": "ed1c646b-734a-4315-b5d5-86fd327c7c79",
+      "name": "VPN",
+      "description": {
+        "content": "VPN tunnels and configurations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "db94e855-d68e-4a61-969a-0c8807566370",
+          "name": "List IPsec Policies",
+          "request": {
+            "name": "List IPsec Policies",
+            "description": {
+              "content": "Retrieve all IPsec policy configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "ipsec",
+                "policy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33460d3d-7153-401e-b701-76c5e60c1630",
+              "name": "List of IPsec policies",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "ipsec",
+                    "policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"src-address\": \"string\",\n    \"dst-address\": \"string\",\n    \"action\": \"string\",\n    \"tunnel\": \"true\",\n    \"disabled\": \"true\"\n  },\n  {\n    \".id\": \"string\",\n    \"src-address\": \"string\",\n    \"dst-address\": \"string\",\n    \"action\": \"string\",\n    \"tunnel\": \"false\",\n    \"disabled\": \"false\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c66f574-c0b4-40c7-8c50-1d5221569b3f",
+          "name": "List IPsec Peers",
+          "request": {
+            "name": "List IPsec Peers",
+            "description": {
+              "content": "Retrieve all IPsec peer configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "ipsec",
+                "peer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09803b3e-378c-44a9-b8d1-78a392498d3b",
+              "name": "List of IPsec peers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "ipsec",
+                    "peer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"address\": \"string\",\n    \"auth-method\": \"string\",\n    \"exchange-mode\": \"string\",\n    \"disabled\": \"true\",\n    \"comment\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"address\": \"string\",\n    \"auth-method\": \"string\",\n    \"exchange-mode\": \"string\",\n    \"disabled\": \"true\",\n    \"comment\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aa266c2b-9238-42d0-a258-a3e06c735d03",
+    "name": "RouterOS REST Bridge VPN API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}

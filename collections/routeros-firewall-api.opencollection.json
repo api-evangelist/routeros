@@ -1,0 +1,175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge Firewall API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Firewall",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Firewall Filter Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/firewall/filter",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by chain (input, forward, output)"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filter by action (accept, drop, reject)"
+              }
+            ]
+          },
+          "docs": "Retrieve all firewall filter rules."
+        },
+        {
+          "info": {
+            "name": "Add Firewall Filter Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/firewall/filter",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new firewall filter rule."
+        },
+        {
+          "info": {
+            "name": "Update Firewall Filter Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/ip/firewall/filter/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an existing firewall filter rule."
+        },
+        {
+          "info": {
+            "name": "Delete Firewall Filter Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{routerIP}/rest/ip/firewall/filter/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Remove a firewall filter rule."
+        },
+        {
+          "info": {
+            "name": "List Firewall NAT Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/firewall/nat",
+            "params": [
+              {
+                "name": "chain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by chain (srcnat, dstnat)"
+              }
+            ]
+          },
+          "docs": "Retrieve all firewall NAT rules."
+        },
+        {
+          "info": {
+            "name": "Add Firewall NAT Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/firewall/nat",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new NAT rule."
+        },
+        {
+          "info": {
+            "name": "List Firewall Address Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/firewall/address-list",
+            "params": [
+              {
+                "name": "list",
+                "value": "",
+                "type": "query",
+                "description": "Filter by list name"
+              }
+            ]
+          },
+          "docs": "Retrieve all firewall address list entries."
+        },
+        {
+          "info": {
+            "name": "Add Firewall Address List Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/firewall/address-list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an IP address to a named address list."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

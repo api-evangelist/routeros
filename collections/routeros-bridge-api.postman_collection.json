@@ -1,0 +1,371 @@
+{
+  "item": [
+    {
+      "id": "680b6e6e-2d35-4d12-8d7c-55b297161c5a",
+      "name": "Bridge",
+      "description": {
+        "content": "Bridge interface management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cd82bf59-5f81-44d4-94af-1e05657258c4",
+          "name": "List Bridges",
+          "request": {
+            "name": "List Bridges",
+            "description": {
+              "content": "Retrieve all bridge interface configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interface",
+                "bridge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "543b8c2c-62fc-479f-846f-923b458d4d48",
+              "name": "List of bridges",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interface",
+                    "bridge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"name\": \"bridge1\",\n    \"mtu\": \"string\",\n    \"mac-address\": \"string\",\n    \"running\": \"true\",\n    \"disabled\": \"false\",\n    \"comment\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"name\": \"bridge1\",\n    \"mtu\": \"string\",\n    \"mac-address\": \"string\",\n    \"running\": \"true\",\n    \"disabled\": \"true\",\n    \"comment\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "224b74d7-9881-402c-948b-36823af56afd",
+          "name": "Add Bridge",
+          "request": {
+            "name": "Add Bridge",
+            "description": {
+              "content": "Create a new bridge interface.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interface",
+                "bridge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ba72f230-e532-4649-bf95-5dc20ba157bd",
+              "name": "Bridge created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interface",
+                    "bridge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \".id\": \"string\",\n  \"name\": \"bridge1\",\n  \"mtu\": \"string\",\n  \"mac-address\": \"string\",\n  \"running\": \"false\",\n  \"disabled\": \"false\",\n  \"comment\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f8dd628-6ed6-4945-a9b0-b5a6ef4d123c",
+          "name": "List Bridge Ports",
+          "request": {
+            "name": "List Bridge Ports",
+            "description": {
+              "content": "Retrieve all bridge port configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interface",
+                "bridge",
+                "port"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bridge",
+                  "value": "<string>",
+                  "description": "Filter by bridge interface name"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7b080a8-2f9c-4b47-a542-cd9a3e0163b7",
+              "name": "List of bridge ports",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interface",
+                    "bridge",
+                    "port"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bridge",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"interface\": \"string\",\n    \"bridge\": \"string\",\n    \"hw\": \"true\",\n    \"disabled\": \"true\"\n  },\n  {\n    \".id\": \"string\",\n    \"interface\": \"string\",\n    \"bridge\": \"string\",\n    \"hw\": \"false\",\n    \"disabled\": \"false\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ae75bf1b-4069-44b5-817d-573e47404b55",
+    "name": "RouterOS REST Bridge API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}

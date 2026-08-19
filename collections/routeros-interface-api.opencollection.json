@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge Interface API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Interface",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Interfaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by interface type (ether, bridge, vlan, etc.)"
+              },
+              {
+                "name": "running",
+                "value": "",
+                "type": "query",
+                "description": "Filter by running state"
+              }
+            ]
+          },
+          "docs": "Retrieve all network interfaces on the device."
+        },
+        {
+          "info": {
+            "name": "Get Interface",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific interface by ID."
+        },
+        {
+          "info": {
+            "name": "Update Interface",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/interface/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify an existing interface configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

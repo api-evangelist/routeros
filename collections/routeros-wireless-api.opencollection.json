@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge Wireless API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wireless",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Wireless Interfaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/wireless"
+          },
+          "docs": "Retrieve all wireless interface configurations."
+        },
+        {
+          "info": {
+            "name": "List Wireless Clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/wireless/registration-table"
+          },
+          "docs": "Retrieve all connected wireless clients from the registration table."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

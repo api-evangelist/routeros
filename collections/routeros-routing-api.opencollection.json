@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge Routing API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Routing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Routes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/route",
+            "params": [
+              {
+                "name": "dst-address",
+                "value": "",
+                "type": "query",
+                "description": "Filter by destination address"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter by active routes"
+              }
+            ]
+          },
+          "docs": "Retrieve the routing table."
+        },
+        {
+          "info": {
+            "name": "Add Static Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/ip/route",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new static route."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

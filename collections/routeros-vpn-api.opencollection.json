@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge VPN API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VPN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List IPsec Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/ipsec/policy"
+          },
+          "docs": "Retrieve all IPsec policy configurations."
+        },
+        {
+          "info": {
+            "name": "List IPsec Peers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/ip/ipsec/peer"
+          },
+          "docs": "Retrieve all IPsec peer configurations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

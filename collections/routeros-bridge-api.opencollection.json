@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bridge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bridges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/bridge"
+          },
+          "docs": "Retrieve all bridge interface configurations."
+        },
+        {
+          "info": {
+            "name": "Add Bridge",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/interface/bridge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new bridge interface."
+        },
+        {
+          "info": {
+            "name": "List Bridge Ports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/interface/bridge/port",
+            "params": [
+              {
+                "name": "bridge",
+                "value": "",
+                "type": "query",
+                "description": "Filter by bridge interface name"
+              }
+            ]
+          },
+          "docs": "Retrieve all bridge port configurations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

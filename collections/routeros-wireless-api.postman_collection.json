@@ -1,0 +1,244 @@
+{
+  "item": [
+    {
+      "id": "5e3ebc63-60d9-49a6-a8ac-a3418ede7cb9",
+      "name": "Wireless",
+      "description": {
+        "content": "Wireless interface and station management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a37fdfa6-91ea-4aff-abb4-8c17c36569bc",
+          "name": "List Wireless Interfaces",
+          "request": {
+            "name": "List Wireless Interfaces",
+            "description": {
+              "content": "Retrieve all wireless interface configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interface",
+                "wireless"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3558e701-a62c-4bd1-9fc5-db91731dea34",
+              "name": "List of wireless interfaces",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interface",
+                    "wireless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"name\": \"string\",\n    \"mode\": \"ap-bridge\",\n    \"ssid\": \"string\",\n    \"band\": \"string\",\n    \"channel-width\": \"string\",\n    \"frequency\": \"string\",\n    \"mac-address\": \"string\",\n    \"running\": \"false\",\n    \"disabled\": \"true\"\n  },\n  {\n    \".id\": \"string\",\n    \"name\": \"string\",\n    \"mode\": \"ap-bridge\",\n    \"ssid\": \"string\",\n    \"band\": \"string\",\n    \"channel-width\": \"string\",\n    \"frequency\": \"string\",\n    \"mac-address\": \"string\",\n    \"running\": \"false\",\n    \"disabled\": \"false\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7092d3ea-bb43-4cd4-bc59-6658dd16d921",
+          "name": "List Wireless Clients",
+          "request": {
+            "name": "List Wireless Clients",
+            "description": {
+              "content": "Retrieve all connected wireless clients from the registration table.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interface",
+                "wireless",
+                "registration-table"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10e5fe34-1f31-4e20-b191-9076a67530b2",
+              "name": "List of connected wireless clients",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interface",
+                    "wireless",
+                    "registration-table"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"interface\": \"string\",\n    \"mac-address\": \"string\",\n    \"ap-tx-rate\": \"string\",\n    \"tx-rate\": \"string\",\n    \"rx-rate\": \"string\",\n    \"signal-strength\": \"string\",\n    \"signal-to-noise\": \"string\",\n    \"uptime\": \"string\",\n    \"last-activity\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"interface\": \"string\",\n    \"mac-address\": \"string\",\n    \"ap-tx-rate\": \"string\",\n    \"tx-rate\": \"string\",\n    \"rx-rate\": \"string\",\n    \"signal-strength\": \"string\",\n    \"signal-to-noise\": \"string\",\n    \"uptime\": \"string\",\n    \"last-activity\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c7198065-4228-4064-9ce5-894b7ca94ab0",
+    "name": "RouterOS REST Bridge Wireless API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}

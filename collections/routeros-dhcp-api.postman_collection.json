@@ -1,0 +1,266 @@
+{
+  "item": [
+    {
+      "id": "615b4c21-02cf-48e8-bd13-987a796e226a",
+      "name": "DHCP",
+      "description": {
+        "content": "DHCP server and client management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c38c16ae-d17e-44e1-aa3e-da6e198f9a4e",
+          "name": "List DHCP Servers",
+          "request": {
+            "name": "List DHCP Servers",
+            "description": {
+              "content": "Retrieve all DHCP server configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "dhcp-server"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8a1b077-12b3-48cc-966b-0cd093a99e6f",
+              "name": "List of DHCP servers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "dhcp-server"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"name\": \"string\",\n    \"interface\": \"string\",\n    \"address-pool\": \"string\",\n    \"lease-time\": \"string\",\n    \"disabled\": \"false\"\n  },\n  {\n    \".id\": \"string\",\n    \"name\": \"string\",\n    \"interface\": \"string\",\n    \"address-pool\": \"string\",\n    \"lease-time\": \"string\",\n    \"disabled\": \"true\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e21ef2f-94d2-4cd4-ba7e-186a72b25593",
+          "name": "List DHCP Leases",
+          "request": {
+            "name": "List DHCP Leases",
+            "description": {
+              "content": "Retrieve all DHCP leases including dynamic and static.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "dhcp-server",
+                "lease"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>",
+                  "description": "Filter by IP address"
+                },
+                {
+                  "disabled": false,
+                  "key": "dynamic",
+                  "value": "<string>",
+                  "description": "Filter dynamic leases"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1cf1ee79-e871-4d9a-9dd0-3da8635564fe",
+              "name": "List of DHCP leases",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "dhcp-server",
+                    "lease"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dynamic",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"address\": \"string\",\n    \"mac-address\": \"string\",\n    \"client-id\": \"string\",\n    \"hostname\": \"string\",\n    \"expires-after\": \"string\",\n    \"dynamic\": \"false\",\n    \"active\": \"true\",\n    \"status\": \"waiting\"\n  },\n  {\n    \".id\": \"string\",\n    \"address\": \"string\",\n    \"mac-address\": \"string\",\n    \"client-id\": \"string\",\n    \"hostname\": \"string\",\n    \"expires-after\": \"string\",\n    \"dynamic\": \"false\",\n    \"active\": \"true\",\n    \"status\": \"bound\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ebad7aca-a0ea-4ec3-82e9-0c5b43d7210e",
+    "name": "RouterOS REST Bridge DHCP API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}

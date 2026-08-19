@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RouterOS REST Bridge System API",
+    "version": "7.1+"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get System Resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/system/resource"
+          },
+          "docs": "Retrieve system resource information including CPU load, memory usage, uptime, RouterOS version, and hardware details."
+        },
+        {
+          "info": {
+            "name": "Get System Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/system/identity"
+          },
+          "docs": "Retrieve the system hostname/identity."
+        },
+        {
+          "info": {
+            "name": "Update System Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{routerIP}/rest/system/identity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the system hostname."
+        },
+        {
+          "info": {
+            "name": "List System Scripts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{routerIP}/rest/system/script"
+          },
+          "docs": "Retrieve all configured system scripts."
+        },
+        {
+          "info": {
+            "name": "Add System Script",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{routerIP}/rest/system/script",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new system script."
+        },
+        {
+          "info": {
+            "name": "Run System Script",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{routerIP}/rest/system/script/:id/run",
+            "params": [
+              {
+                "name": "id",
+                "value": "*1",
+                "type": "path",
+                "description": "RouterOS internal record identifier"
+              }
+            ]
+          },
+          "docs": "Execute a specific system script."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

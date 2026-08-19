@@ -1,0 +1,974 @@
+{
+  "item": [
+    {
+      "id": "de25f72f-b0de-4934-b99e-1f5bf5d78a8c",
+      "name": "Firewall",
+      "description": {
+        "content": "Firewall rules, NAT, and address lists",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dbef13df-8c45-4323-b1b7-b8252fcac407",
+          "name": "List Firewall Filter Rules",
+          "request": {
+            "name": "List Firewall Filter Rules",
+            "description": {
+              "content": "Retrieve all firewall filter rules.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "filter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chain",
+                  "value": "<string>",
+                  "description": "Filter by chain (input, forward, output)"
+                },
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>",
+                  "description": "Filter by action (accept, drop, reject)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5926c44a-654b-4c22-b497-e4642e6c4c78",
+              "name": "List of firewall filter rules",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"chain\": \"forward\",\n    \"action\": \"accept\",\n    \"src-address\": \"string\",\n    \"dst-address\": \"string\",\n    \"protocol\": \"string\",\n    \"in-interface\": \"string\",\n    \"out-interface\": \"string\",\n    \"disabled\": \"false\",\n    \"comment\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"chain\": \"forward\",\n    \"action\": \"accept\",\n    \"src-address\": \"string\",\n    \"dst-address\": \"string\",\n    \"protocol\": \"string\",\n    \"in-interface\": \"string\",\n    \"out-interface\": \"string\",\n    \"disabled\": \"false\",\n    \"comment\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70f06013-3936-4b94-bbb0-c2e727b4f6fc",
+          "name": "Add Firewall Filter Rule",
+          "request": {
+            "name": "Add Firewall Filter Rule",
+            "description": {
+              "content": "Add a new firewall filter rule.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "filter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"action\": \"<string>\",\n  \"src-address\": \"<string>\",\n  \"dst-address\": \"<string>\",\n  \"protocol\": \"<string>\",\n  \"in-interface\": \"<string>\",\n  \"out-interface\": \"<string>\",\n  \"disabled\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2fc583d0-4984-4252-b61f-c96844bf0103",
+              "name": "Firewall filter rule created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "filter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"<string>\",\n  \"action\": \"<string>\",\n  \"src-address\": \"<string>\",\n  \"dst-address\": \"<string>\",\n  \"protocol\": \"<string>\",\n  \"in-interface\": \"<string>\",\n  \"out-interface\": \"<string>\",\n  \"disabled\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \".id\": \"string\",\n  \"chain\": \"forward\",\n  \"action\": \"accept\",\n  \"src-address\": \"string\",\n  \"dst-address\": \"string\",\n  \"protocol\": \"string\",\n  \"in-interface\": \"string\",\n  \"out-interface\": \"string\",\n  \"disabled\": \"false\",\n  \"comment\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1bbe21e0-2523-452c-87d0-2cf680c2a952",
+          "name": "Update Firewall Filter Rule",
+          "request": {
+            "name": "Update Firewall Filter Rule",
+            "description": {
+              "content": "Modify an existing firewall filter rule.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "filter",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) RouterOS internal record identifier"
+                },
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"action\": \"<string>\",\n  \"src-address\": \"<string>\",\n  \"dst-address\": \"<string>\",\n  \"protocol\": \"<string>\",\n  \"in-interface\": \"<string>\",\n  \"out-interface\": \"<string>\",\n  \"disabled\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d1aa1d61-c28f-4253-aff5-c410d17eca06",
+              "name": "Firewall filter rule updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "filter",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) RouterOS internal record identifier"
+                    },
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"<string>\",\n  \"action\": \"<string>\",\n  \"src-address\": \"<string>\",\n  \"dst-address\": \"<string>\",\n  \"protocol\": \"<string>\",\n  \"in-interface\": \"<string>\",\n  \"out-interface\": \"<string>\",\n  \"disabled\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \".id\": \"string\",\n  \"chain\": \"forward\",\n  \"action\": \"accept\",\n  \"src-address\": \"string\",\n  \"dst-address\": \"string\",\n  \"protocol\": \"string\",\n  \"in-interface\": \"string\",\n  \"out-interface\": \"string\",\n  \"disabled\": \"false\",\n  \"comment\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06db36e9-53cf-45fa-ad12-217fe201edc1",
+          "name": "Delete Firewall Filter Rule",
+          "request": {
+            "name": "Delete Firewall Filter Rule",
+            "description": {
+              "content": "Remove a firewall filter rule.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "filter",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) RouterOS internal record identifier"
+                },
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "34a36d59-12f3-41b4-bb67-6f7941ca588b",
+              "name": "Firewall filter rule deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "filter",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) RouterOS internal record identifier"
+                    },
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3138d504-e537-4808-8cb1-19e1cb478e8f",
+          "name": "List Firewall NAT Rules",
+          "request": {
+            "name": "List Firewall NAT Rules",
+            "description": {
+              "content": "Retrieve all firewall NAT rules.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "nat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chain",
+                  "value": "<string>",
+                  "description": "Filter by chain (srcnat, dstnat)"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9126d398-ca74-4675-943b-8d364bc030a8",
+              "name": "List of NAT rules",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "nat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"chain\": \"srcnat\",\n    \"action\": \"masquerade\",\n    \"src-address\": \"string\",\n    \"dst-address\": \"string\",\n    \"out-interface\": \"string\",\n    \"to-addresses\": \"string\",\n    \"disabled\": \"false\",\n    \"comment\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"chain\": \"srcnat\",\n    \"action\": \"masquerade\",\n    \"src-address\": \"string\",\n    \"dst-address\": \"string\",\n    \"out-interface\": \"string\",\n    \"to-addresses\": \"string\",\n    \"disabled\": \"true\",\n    \"comment\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fc92498-fb1f-4cea-b5a0-9189dfb027ce",
+          "name": "Add Firewall NAT Rule",
+          "request": {
+            "name": "Add Firewall NAT Rule",
+            "description": {
+              "content": "Add a new NAT rule.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "nat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"action\": \"<string>\",\n  \"src-address\": \"<string>\",\n  \"dst-address\": \"<string>\",\n  \"out-interface\": \"<string>\",\n  \"to-addresses\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bdd57a80-cbd3-4567-b712-036f010dba2a",
+              "name": "NAT rule created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "nat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"<string>\",\n  \"action\": \"<string>\",\n  \"src-address\": \"<string>\",\n  \"dst-address\": \"<string>\",\n  \"out-interface\": \"<string>\",\n  \"to-addresses\": \"<string>\",\n  \"comment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \".id\": \"string\",\n  \"chain\": \"srcnat\",\n  \"action\": \"masquerade\",\n  \"src-address\": \"string\",\n  \"dst-address\": \"string\",\n  \"out-interface\": \"string\",\n  \"to-addresses\": \"string\",\n  \"disabled\": \"false\",\n  \"comment\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5c345c0-d72c-4adb-8dcf-e62d5161e8c5",
+          "name": "List Firewall Address Lists",
+          "request": {
+            "name": "List Firewall Address Lists",
+            "description": {
+              "content": "Retrieve all firewall address list entries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "address-list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "list",
+                  "value": "<string>",
+                  "description": "Filter by list name"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ffe1310e-bf8c-4196-af67-0c22c94212af",
+              "name": "List of address list entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "address-list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "list",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \".id\": \"string\",\n    \"list\": \"blocked\",\n    \"address\": \"10.0.0.1\",\n    \"dynamic\": \"true\",\n    \"disabled\": \"true\",\n    \"comment\": \"string\",\n    \"timeout\": \"string\"\n  },\n  {\n    \".id\": \"string\",\n    \"list\": \"blocked\",\n    \"address\": \"10.0.0.1\",\n    \"dynamic\": \"false\",\n    \"disabled\": \"false\",\n    \"comment\": \"string\",\n    \"timeout\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1b9fa2b-4c1c-4e93-a66b-d40ec1b0fa09",
+          "name": "Add Firewall Address List Entry",
+          "request": {
+            "name": "Add Firewall Address List Entry",
+            "description": {
+              "content": "Add an IP address to a named address list.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip",
+                "firewall",
+                "address-list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "IP address of the RouterOS device",
+                  "type": "any",
+                  "value": "{{routerIP}}",
+                  "key": "routerIP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"list\": \"<string>\",\n  \"address\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"timeout\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "db7ed988-4d6f-4699-b235-586a87aeac6e",
+              "name": "Address list entry created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip",
+                    "firewall",
+                    "address-list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "IP address of the RouterOS device",
+                      "type": "any",
+                      "value": "{{routerIP}}",
+                      "key": "routerIP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"list\": \"<string>\",\n  \"address\": \"<string>\",\n  \"comment\": \"<string>\",\n  \"timeout\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \".id\": \"string\",\n  \"list\": \"blocked\",\n  \"address\": \"10.0.0.1\",\n  \"dynamic\": \"true\",\n  \"disabled\": \"true\",\n  \"comment\": \"string\",\n  \"timeout\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "IP address of the RouterOS device",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "192.168.88.1",
+      "key": "routerIP"
+    },
+    {
+      "type": "string",
+      "value": "https://{{routerIP}}/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "36b3913a-db48-4941-90ce-a0c29a20658c",
+    "name": "RouterOS REST Bridge Firewall API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.\n\nContact Support:\n Name: MikroTik Support",
+      "type": "text/plain"
+    }
+  }
+}
