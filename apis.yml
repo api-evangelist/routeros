@@ -22,6 +22,12 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/routeros.png
 tags:
   - Networking
+  - Router
+  - Network Management
+  - Firewall
+  - MikroTik
+tags_raw:
+  - Networking
   - Routers
   - Network Management
   - Firewall
@@ -233,6 +239,8 @@ apis:
   humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
   baseURL: https://{router-ip}/rest
   tags:
+  - Interfaces
+  tags_raw:
   - Interface
   properties:
   - type: OpenAPI
