@@ -1,0 +1,36 @@
+slug: routeros
+provider: RouterOS
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: IP Address
+  spec_file: routeros-ip-address-api-openapi.yml
+  capability_id: BC-2600.20
+  capability_id_l1: BC-2600
+  capability_name: Network Configuration Management
+  confidence: 0.7
+  evidence: PUT /ip/address addIpAddress Add IP Address; PATCH /ip/address/{id} updateIpAddress Update
+    IP Address
+  reason: Full CRUD over IP address assignments on device interfaces is controlled deployment of network
+    element configuration. Clear network-configuration surface; no business-domain capability involved.
+- tag: Interface
+  spec_file: routeros-interface-api-openapi.yml
+  capability_id: BC-2600.20
+  capability_id_l1: BC-2600
+  capability_name: Network Configuration Management
+  confidence: 0.7
+  evidence: GET /interface listInterfaces List Interfaces; PATCH /interface/{id} updateInterface Update
+    Interface
+  reason: Listing and patching physical/logical interfaces of a router is network element configuration
+    management. Could arguably touch network inventory, but the PATCH operation makes configuration the
+    stronger reading.

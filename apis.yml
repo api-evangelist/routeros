@@ -511,6 +511,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/routeros-capability-edges.yml
+    name: RouterOS Business Capability Map
   - type: AgenticAccess
     url: agentic-access/routeros-agentic-access.yml
   - type: VulnerabilityDisclosure
