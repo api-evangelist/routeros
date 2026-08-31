@@ -250,7 +250,7 @@ apis:
   humanURL: https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API
   baseURL: https://{router-ip}/rest
   tags:
-  - Interfaces
+  - Interface
   tags_raw:
   - Interface
   properties:
