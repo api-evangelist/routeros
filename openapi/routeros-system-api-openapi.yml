@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: RouterOS REST Bridge System API
+  title: RouterOS REST System API
   description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
   version: 7.1+
   contact:
@@ -121,7 +121,58 @@ paths:
               schema:
                 type: object
 components:
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
   schemas:
+    SystemResource:
+      type: object
+      description: RouterOS system resource information
+      properties:
+        uptime:
+          type: string
+          description: System uptime
+          example: 1d2h3m4s
+        version:
+          type: string
+          description: RouterOS version
+          example: 7.15.1
+        build-time:
+          type: string
+          description: RouterOS build timestamp
+        free-memory:
+          type: string
+          description: Available memory in bytes
+        total-memory:
+          type: string
+          description: Total memory in bytes
+        cpu:
+          type: string
+          description: CPU model
+        cpu-count:
+          type: string
+          description: Number of CPU cores
+        cpu-load:
+          type: string
+          description: Current CPU load percentage
+        free-hdd-space:
+          type: string
+          description: Available storage in bytes
+        total-hdd-space:
+          type: string
+          description: Total storage in bytes
+        architecture-name:
+          type: string
+          description: CPU architecture
+        board-name:
+          type: string
+          description: Hardware board model
     Script:
       type: object
       description: RouterOS system script
@@ -173,57 +224,6 @@ components:
           type: string
           description: System hostname
           example: MikroTik
-    SystemResource:
-      type: object
-      description: RouterOS system resource information
-      properties:
-        uptime:
-          type: string
-          description: System uptime
-          example: 1d2h3m4s
-        version:
-          type: string
-          description: RouterOS version
-          example: 7.15.1
-        build-time:
-          type: string
-          description: RouterOS build timestamp
-        free-memory:
-          type: string
-          description: Available memory in bytes
-        total-memory:
-          type: string
-          description: Total memory in bytes
-        cpu:
-          type: string
-          description: CPU model
-        cpu-count:
-          type: string
-          description: Number of CPU cores
-        cpu-load:
-          type: string
-          description: Current CPU load percentage
-        free-hdd-space:
-          type: string
-          description: Available storage in bytes
-        total-hdd-space:
-          type: string
-          description: Total storage in bytes
-        architecture-name:
-          type: string
-          description: CPU architecture
-        board-name:
-          type: string
-          description: Hardware board model
-  parameters:
-    RecordId:
-      name: id
-      in: path
-      required: true
-      description: RouterOS internal record identifier
-      schema:
-        type: string
-      example: '*1'
   securitySchemes:
     basicAuth:
       type: http

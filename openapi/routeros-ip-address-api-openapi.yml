@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: RouterOS REST Bridge IP Address API
+  title: RouterOS REST IP Address API
   description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
   version: 7.1+
   contact:
@@ -134,28 +134,46 @@ paths:
         '204':
           description: IP address deleted
 components:
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
+  responses:
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or credentials invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    IpAddressCreate:
+    Error:
       type: object
-      required:
-      - address
-      - interface
+      description: API error response
       properties:
-        address:
+        detail:
           type: string
-          description: IP address with prefix length (CIDR notation)
-          example: 192.168.1.1/24
-        interface:
-          type: string
-          description: Interface name to assign address to
-          example: ether1
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
+          description: Error message
+          example: no such item
+        error:
+          type: integer
+          description: Error code
     IpAddress:
       type: object
       description: RouterOS IP address configuration
@@ -191,45 +209,27 @@ components:
         comment:
           type: string
           description: Optional comment
-    Error:
+    IpAddressCreate:
       type: object
-      description: API error response
+      required:
+      - address
+      - interface
       properties:
-        detail:
+        address:
           type: string
-          description: Error message
-          example: no such item
-        error:
-          type: integer
-          description: Error code
-  responses:
-    Unauthorized:
-      description: Authentication required or credentials invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Record not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    RecordId:
-      name: id
-      in: path
-      required: true
-      description: RouterOS internal record identifier
-      schema:
-        type: string
-      example: '*1'
+          description: IP address with prefix length (CIDR notation)
+          example: 192.168.1.1/24
+        interface:
+          type: string
+          description: Interface name to assign address to
+          example: ether1
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

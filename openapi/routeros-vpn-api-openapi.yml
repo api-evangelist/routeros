@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: RouterOS REST Bridge VPN API
+  title: RouterOS REST VPN API
   description: The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It provides CRUD operations on all RouterOS configuration menus via standard HTTP methods. Authentication uses HTTP Basic Auth with console credentials. All values in responses are encoded as strings.
   version: 7.1+
   contact:
@@ -19,7 +19,7 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: VPN
+- name: vpn
   description: VPN tunnels and configurations
 paths:
   /ip/ipsec/policy:
@@ -28,7 +28,7 @@ paths:
       summary: List IPsec Policies
       description: Retrieve all IPsec policy configurations.
       tags:
-      - VPN
+      - vpn
       responses:
         '200':
           description: List of IPsec policies
@@ -44,7 +44,7 @@ paths:
       summary: List IPsec Peers
       description: Retrieve all IPsec peer configurations.
       tags:
-      - VPN
+      - vpn
       responses:
         '200':
           description: List of IPsec peers
