@@ -70,25 +70,6 @@ paths:
                   $ref: '#/components/schemas/DhcpLease'
 components:
   schemas:
-    DhcpServer:
-      type: object
-      description: RouterOS DHCP server configuration
-      properties:
-        .id:
-          type: string
-        name:
-          type: string
-        interface:
-          type: string
-        address-pool:
-          type: string
-        lease-time:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
     DhcpLease:
       type: object
       description: RouterOS DHCP lease
@@ -124,6 +105,25 @@ components:
           - testing
           - bound
           - offered
+    DhcpServer:
+      type: object
+      description: RouterOS DHCP server configuration
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+        interface:
+          type: string
+        address-pool:
+          type: string
+        lease-time:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
   securitySchemes:
     basicAuth:
       type: http

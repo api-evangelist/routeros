@@ -134,46 +134,7 @@ paths:
         '204':
           description: IP address deleted
 components:
-  parameters:
-    RecordId:
-      name: id
-      in: path
-      required: true
-      description: RouterOS internal record identifier
-      schema:
-        type: string
-      example: '*1'
-  responses:
-    NotFound:
-      description: Record not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or credentials invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      description: API error response
-      properties:
-        detail:
-          type: string
-          description: Error message
-          example: no such item
-        error:
-          type: integer
-          description: Error code
     IpAddress:
       type: object
       description: RouterOS IP address configuration
@@ -209,6 +170,17 @@ components:
         comment:
           type: string
           description: Optional comment
+    Error:
+      type: object
+      description: API error response
+      properties:
+        detail:
+          type: string
+          description: Error message
+          example: no such item
+        error:
+          type: integer
+          description: Error code
     IpAddressCreate:
       type: object
       required:
@@ -230,6 +202,34 @@ components:
           - 'false'
         comment:
           type: string
+  responses:
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or credentials invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
   securitySchemes:
     basicAuth:
       type: http

@@ -107,15 +107,6 @@ components:
           - 'false'
         comment:
           type: string
-    BridgeCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        comment:
-          type: string
     BridgePort:
       type: object
       description: RouterOS bridge port
@@ -138,6 +129,15 @@ components:
           enum:
           - 'true'
           - 'false'
+    BridgeCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        comment:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

@@ -56,26 +56,6 @@ paths:
                   $ref: '#/components/schemas/IpsecPeer'
 components:
   schemas:
-    IpsecPeer:
-      type: object
-      description: RouterOS IPsec peer configuration
-      properties:
-        .id:
-          type: string
-        address:
-          type: string
-          description: Peer IP address
-        auth-method:
-          type: string
-        exchange-mode:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
     IpsecPolicy:
       type: object
       description: RouterOS IPsec policy
@@ -98,6 +78,26 @@ components:
           enum:
           - 'true'
           - 'false'
+    IpsecPeer:
+      type: object
+      description: RouterOS IPsec peer configuration
+      properties:
+        .id:
+          type: string
+        address:
+          type: string
+          description: Peer IP address
+        auth-method:
+          type: string
+        exchange-mode:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

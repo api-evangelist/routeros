@@ -91,20 +91,6 @@ paths:
                 $ref: '#/components/schemas/Interface'
 components:
   schemas:
-    InterfaceUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        mtu:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
     Interface:
       type: object
       description: RouterOS network interface
@@ -134,6 +120,20 @@ components:
           enum:
           - 'true'
           - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    InterfaceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        mtu:
+          type: string
         disabled:
           type: string
           enum:
