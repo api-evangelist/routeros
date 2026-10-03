@@ -122,6 +122,57 @@ paths:
                 type: object
 components:
   schemas:
+    Script:
+      type: object
+      description: RouterOS system script
+      properties:
+        .id:
+          type: string
+        name:
+          type: string
+          description: Script name
+        owner:
+          type: string
+          description: Script owner username
+        policy:
+          type: string
+          description: Allowed policies
+        dont-require-permissions:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        source:
+          type: string
+          description: Script source code
+        last-started:
+          type: string
+        run-count:
+          type: string
+        comment:
+          type: string
+    ScriptCreate:
+      type: object
+      required:
+      - name
+      - source
+      properties:
+        name:
+          type: string
+        source:
+          type: string
+        policy:
+          type: string
+        comment:
+          type: string
+    SystemIdentity:
+      type: object
+      description: RouterOS system identity/hostname
+      properties:
+        name:
+          type: string
+          description: System hostname
+          example: MikroTik
     SystemResource:
       type: object
       description: RouterOS system resource information
@@ -164,57 +215,6 @@ components:
         board-name:
           type: string
           description: Hardware board model
-    ScriptCreate:
-      type: object
-      required:
-      - name
-      - source
-      properties:
-        name:
-          type: string
-        source:
-          type: string
-        policy:
-          type: string
-        comment:
-          type: string
-    SystemIdentity:
-      type: object
-      description: RouterOS system identity/hostname
-      properties:
-        name:
-          type: string
-          description: System hostname
-          example: MikroTik
-    Script:
-      type: object
-      description: RouterOS system script
-      properties:
-        .id:
-          type: string
-        name:
-          type: string
-          description: Script name
-        owner:
-          type: string
-          description: Script owner username
-        policy:
-          type: string
-          description: Allowed policies
-        dont-require-permissions:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        source:
-          type: string
-          description: Script source code
-        last-started:
-          type: string
-        run-count:
-          type: string
-        comment:
-          type: string
   parameters:
     RecordId:
       name: id

@@ -134,6 +134,25 @@ paths:
         '204':
           description: IP address deleted
 components:
+  responses:
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or credentials invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     IpAddress:
       type: object
@@ -202,25 +221,6 @@ components:
           - 'false'
         comment:
           type: string
-  responses:
-    NotFound:
-      description: Record not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or credentials invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     RecordId:
       name: id

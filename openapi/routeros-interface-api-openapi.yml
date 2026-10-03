@@ -90,7 +90,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/Interface'
 components:
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
   schemas:
+    InterfaceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        mtu:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
     Interface:
       type: object
       description: RouterOS network interface
@@ -127,29 +150,6 @@ components:
           - 'false'
         comment:
           type: string
-    InterfaceUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        mtu:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
-  parameters:
-    RecordId:
-      name: id
-      in: path
-      required: true
-      description: RouterOS internal record identifier
-      schema:
-        type: string
-      example: '*1'
   securitySchemes:
     basicAuth:
       type: http
