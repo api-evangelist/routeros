@@ -57,6 +57,20 @@ paths:
                 $ref: '#/components/schemas/DnsSettings'
 components:
   schemas:
+    DnsSettingsUpdate:
+      type: object
+      properties:
+        servers:
+          type: string
+        allow-remote-requests:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        cache-size:
+          type: string
+        cache-max-ttl:
+          type: string
     DnsSettings:
       type: object
       description: RouterOS DNS settings
@@ -83,20 +97,6 @@ components:
         cache-max-ttl:
           type: string
         cache-used:
-          type: string
-    DnsSettingsUpdate:
-      type: object
-      properties:
-        servers:
-          type: string
-        allow-remote-requests:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        cache-size:
-          type: string
-        cache-max-ttl:
           type: string
   securitySchemes:
     basicAuth:

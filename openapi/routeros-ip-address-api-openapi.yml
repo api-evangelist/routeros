@@ -134,26 +134,28 @@ paths:
         '204':
           description: IP address deleted
 components:
-  responses:
-    NotFound:
-      description: Record not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or credentials invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    IpAddressCreate:
+      type: object
+      required:
+      - address
+      - interface
+      properties:
+        address:
+          type: string
+          description: IP address with prefix length (CIDR notation)
+          example: 192.168.1.1/24
+        interface:
+          type: string
+          description: Interface name to assign address to
+          example: ether1
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
     IpAddress:
       type: object
       description: RouterOS IP address configuration
@@ -200,27 +202,6 @@ components:
         error:
           type: integer
           description: Error code
-    IpAddressCreate:
-      type: object
-      required:
-      - address
-      - interface
-      properties:
-        address:
-          type: string
-          description: IP address with prefix length (CIDR notation)
-          example: 192.168.1.1/24
-        interface:
-          type: string
-          description: Interface name to assign address to
-          example: ether1
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
   parameters:
     RecordId:
       name: id
@@ -230,6 +211,25 @@ components:
       schema:
         type: string
       example: '*1'
+  responses:
+    NotFound:
+      description: Record not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or credentials invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

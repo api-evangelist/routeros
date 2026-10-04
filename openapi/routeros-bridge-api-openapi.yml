@@ -103,15 +103,6 @@ components:
           enum:
           - 'true'
           - 'false'
-    BridgeCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        comment:
-          type: string
     Bridge:
       type: object
       description: RouterOS bridge interface
@@ -136,6 +127,15 @@ components:
           enum:
           - 'true'
           - 'false'
+        comment:
+          type: string
+    BridgeCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
         comment:
           type: string
   securitySchemes:

@@ -185,64 +185,6 @@ paths:
                 $ref: '#/components/schemas/AddressList'
 components:
   schemas:
-    AddressList:
-      type: object
-      description: RouterOS firewall address list entry
-      properties:
-        .id:
-          type: string
-        list:
-          type: string
-          description: Address list name
-          example: blocked
-        address:
-          type: string
-          description: IP address or range
-          example: 10.0.0.1
-        dynamic:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
-        timeout:
-          type: string
-          description: Optional expiry timeout
-    FirewallNat:
-      type: object
-      description: RouterOS NAT rule
-      properties:
-        .id:
-          type: string
-        chain:
-          type: string
-          description: NAT chain (srcnat, dstnat)
-          example: srcnat
-        action:
-          type: string
-          description: NAT action (masquerade, src-nat, dst-nat, etc.)
-          example: masquerade
-        src-address:
-          type: string
-        dst-address:
-          type: string
-        out-interface:
-          type: string
-        to-addresses:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
     FirewallNatCreate:
       type: object
       required:
@@ -261,33 +203,6 @@ components:
           type: string
         to-addresses:
           type: string
-        comment:
-          type: string
-    FirewallFilterCreate:
-      type: object
-      required:
-      - chain
-      - action
-      properties:
-        chain:
-          type: string
-        action:
-          type: string
-        src-address:
-          type: string
-        dst-address:
-          type: string
-        protocol:
-          type: string
-        in-interface:
-          type: string
-        out-interface:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
         comment:
           type: string
     FirewallFilter:
@@ -326,6 +241,62 @@ components:
           - 'false'
         comment:
           type: string
+    FirewallFilterCreate:
+      type: object
+      required:
+      - chain
+      - action
+      properties:
+        chain:
+          type: string
+        action:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        protocol:
+          type: string
+        in-interface:
+          type: string
+        out-interface:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    FirewallNat:
+      type: object
+      description: RouterOS NAT rule
+      properties:
+        .id:
+          type: string
+        chain:
+          type: string
+          description: NAT chain (srcnat, dstnat)
+          example: srcnat
+        action:
+          type: string
+          description: NAT action (masquerade, src-nat, dst-nat, etc.)
+          example: masquerade
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        out-interface:
+          type: string
+        to-addresses:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
     AddressListCreate:
       type: object
       required:
@@ -340,6 +311,35 @@ components:
           type: string
         timeout:
           type: string
+    AddressList:
+      type: object
+      description: RouterOS firewall address list entry
+      properties:
+        .id:
+          type: string
+        list:
+          type: string
+          description: Address list name
+          example: blocked
+        address:
+          type: string
+          description: IP address or range
+          example: 10.0.0.1
+        dynamic:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+        timeout:
+          type: string
+          description: Optional expiry timeout
   parameters:
     RecordId:
       name: id
