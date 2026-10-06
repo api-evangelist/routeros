@@ -46,7 +46,7 @@ tags_raw:
   - MikroTik
 url: https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/apis.yml
 created: '2024-11-07'
-modified: '2026-05-19'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: routeros:routeros-tcp-api
@@ -512,6 +512,10 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
 common:
+  - url: https://mikrotik.com/supportsec
+    type: Blog
+  - url: https://cdn.mikrotik.com/web-assets/supportsec/rss.xml
+    type: BlogRSS
   - type: CapabilityMap
     url: capabilities/routeros-capability-edges.yml
     name: RouterOS Business Capability Map
