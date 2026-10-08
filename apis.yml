@@ -512,6 +512,12 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml
 common:
+  - type: Plans
+    url: plans/routeros-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/routeros-rate-limits.yml
+  - type: FinOps
+    url: finops/routeros-finops.yml
   - url: https://mikrotik.com/supportsec
     type: Blog
   - url: https://cdn.mikrotik.com/web-assets/supportsec/rss.xml
