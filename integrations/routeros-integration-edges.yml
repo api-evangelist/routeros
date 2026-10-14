@@ -1,0 +1,43 @@
+edges:
+- partner_name: Connectivity Standards Alliance (Matter)
+  partner: null
+  type: contract
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://on.dcl.csa-iot.org/dcl/vendorinfo/vendors/5540
+  category: Matter certified products
+  contract_reference:
+    register: CSA Distributed Compliance Ledger (Matter certification)
+    spec_file: null
+    standard: Matter
+    role: Matter certified vendor
+    vendor_id: 5540
+    registered_name: Mikrotik
+    legal_name: Mikrotikls SIA
+    landing_page: https://mikrotik.com/
+    identity_source: vendorLandingPageURL
+    matched_domain: mikrotik.com
+    matched_by: domain+verified
+    certified_models: 6
+    certified_products:
+    - product: Air Quality Sensor
+      device_type_id: 44
+      models: 6
+      revoked_models: 0
+      latest_certification: '2026-08-11'
+      transports:
+      - bluetooth
+      - thread
+      examples:
+      - IAQM-THC2P-G
+      - IAQM-THC2P-W
+      - IAQM-THC2PV-G
+      lapsed: false
+    signal_note: certified_products = one entry per device type (diversity), not per model
+    detected_by: sweep-iot.py
+    detected: '2026-10-14'
+generated: '2026-10-14'
+method: searched
+checked:
+- https://on.dcl.csa-iot.org/dcl/vendorinfo/vendors
