@@ -81,28 +81,6 @@ paths:
                   $ref: '#/components/schemas/BridgePort'
 components:
   schemas:
-    BridgePort:
-      type: object
-      description: RouterOS bridge port
-      properties:
-        .id:
-          type: string
-        interface:
-          type: string
-          description: Physical interface to add to bridge
-        bridge:
-          type: string
-          description: Bridge interface name
-        hw:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
     Bridge:
       type: object
       description: RouterOS bridge interface
@@ -129,6 +107,28 @@ components:
           - 'false'
         comment:
           type: string
+    BridgePort:
+      type: object
+      description: RouterOS bridge port
+      properties:
+        .id:
+          type: string
+        interface:
+          type: string
+          description: Physical interface to add to bridge
+        bridge:
+          type: string
+          description: Bridge interface name
+        hw:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
     BridgeCreate:
       type: object
       required:

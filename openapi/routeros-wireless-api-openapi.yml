@@ -56,31 +56,6 @@ paths:
                   $ref: '#/components/schemas/WirelessClient'
 components:
   schemas:
-    WirelessClient:
-      type: object
-      description: Connected wireless client from registration table
-      properties:
-        .id:
-          type: string
-        interface:
-          type: string
-        mac-address:
-          type: string
-          description: Client MAC address
-        ap-tx-rate:
-          type: string
-        tx-rate:
-          type: string
-        rx-rate:
-          type: string
-        signal-strength:
-          type: string
-        signal-to-noise:
-          type: string
-        uptime:
-          type: string
-        last-activity:
-          type: string
     WirelessInterface:
       type: object
       description: RouterOS wireless interface configuration
@@ -115,6 +90,31 @@ components:
           enum:
           - 'true'
           - 'false'
+    WirelessClient:
+      type: object
+      description: Connected wireless client from registration table
+      properties:
+        .id:
+          type: string
+        interface:
+          type: string
+        mac-address:
+          type: string
+          description: Client MAC address
+        ap-tx-rate:
+          type: string
+        tx-rate:
+          type: string
+        rx-rate:
+          type: string
+        signal-strength:
+          type: string
+        signal-to-noise:
+          type: string
+        uptime:
+          type: string
+        last-activity:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

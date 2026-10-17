@@ -73,6 +73,20 @@ paths:
                 $ref: '#/components/schemas/Route'
 components:
   schemas:
+    RouteCreate:
+      type: object
+      required:
+      - dst-address
+      - gateway
+      properties:
+        dst-address:
+          type: string
+        gateway:
+          type: string
+        distance:
+          type: string
+        comment:
+          type: string
     Route:
       type: object
       description: RouterOS routing table entry
@@ -106,20 +120,6 @@ components:
           enum:
           - 'true'
           - 'false'
-        comment:
-          type: string
-    RouteCreate:
-      type: object
-      required:
-      - dst-address
-      - gateway
-      properties:
-        dst-address:
-          type: string
-        gateway:
-          type: string
-        distance:
-          type: string
         comment:
           type: string
   securitySchemes:

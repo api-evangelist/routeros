@@ -135,27 +135,6 @@ paths:
           description: IP address deleted
 components:
   schemas:
-    IpAddressCreate:
-      type: object
-      required:
-      - address
-      - interface
-      properties:
-        address:
-          type: string
-          description: IP address with prefix length (CIDR notation)
-          example: 192.168.1.1/24
-        interface:
-          type: string
-          description: Interface name to assign address to
-          example: ether1
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
     IpAddress:
       type: object
       description: RouterOS IP address configuration
@@ -202,15 +181,27 @@ components:
         error:
           type: integer
           description: Error code
-  parameters:
-    RecordId:
-      name: id
-      in: path
-      required: true
-      description: RouterOS internal record identifier
-      schema:
-        type: string
-      example: '*1'
+    IpAddressCreate:
+      type: object
+      required:
+      - address
+      - interface
+      properties:
+        address:
+          type: string
+          description: IP address with prefix length (CIDR notation)
+          example: 192.168.1.1/24
+        interface:
+          type: string
+          description: Interface name to assign address to
+          example: ether1
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
   responses:
     NotFound:
       description: Record not found
@@ -230,6 +221,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    RecordId:
+      name: id
+      in: path
+      required: true
+      description: RouterOS internal record identifier
+      schema:
+        type: string
+      example: '*1'
   securitySchemes:
     basicAuth:
       type: http

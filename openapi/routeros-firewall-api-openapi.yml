@@ -205,6 +205,76 @@ components:
           type: string
         comment:
           type: string
+    AddressListCreate:
+      type: object
+      required:
+      - list
+      - address
+      properties:
+        list:
+          type: string
+        address:
+          type: string
+        comment:
+          type: string
+        timeout:
+          type: string
+    FirewallNat:
+      type: object
+      description: RouterOS NAT rule
+      properties:
+        .id:
+          type: string
+        chain:
+          type: string
+          description: NAT chain (srcnat, dstnat)
+          example: srcnat
+        action:
+          type: string
+          description: NAT action (masquerade, src-nat, dst-nat, etc.)
+          example: masquerade
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        out-interface:
+          type: string
+        to-addresses:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
+    FirewallFilterCreate:
+      type: object
+      required:
+      - chain
+      - action
+      properties:
+        chain:
+          type: string
+        action:
+          type: string
+        src-address:
+          type: string
+        dst-address:
+          type: string
+        protocol:
+          type: string
+        in-interface:
+          type: string
+        out-interface:
+          type: string
+        disabled:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        comment:
+          type: string
     FirewallFilter:
       type: object
       description: RouterOS firewall filter rule
@@ -240,76 +310,6 @@ components:
           - 'true'
           - 'false'
         comment:
-          type: string
-    FirewallFilterCreate:
-      type: object
-      required:
-      - chain
-      - action
-      properties:
-        chain:
-          type: string
-        action:
-          type: string
-        src-address:
-          type: string
-        dst-address:
-          type: string
-        protocol:
-          type: string
-        in-interface:
-          type: string
-        out-interface:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
-    FirewallNat:
-      type: object
-      description: RouterOS NAT rule
-      properties:
-        .id:
-          type: string
-        chain:
-          type: string
-          description: NAT chain (srcnat, dstnat)
-          example: srcnat
-        action:
-          type: string
-          description: NAT action (masquerade, src-nat, dst-nat, etc.)
-          example: masquerade
-        src-address:
-          type: string
-        dst-address:
-          type: string
-        out-interface:
-          type: string
-        to-addresses:
-          type: string
-        disabled:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        comment:
-          type: string
-    AddressListCreate:
-      type: object
-      required:
-      - list
-      - address
-      properties:
-        list:
-          type: string
-        address:
-          type: string
-        comment:
-          type: string
-        timeout:
           type: string
     AddressList:
       type: object
