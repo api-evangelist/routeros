@@ -1,4 +1,4 @@
-# RouterOS (routeros)
+# RouterOS
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,94 +66,176 @@
 
 RouterOS is MikroTik's powerful network operating system designed for managing routers, switches, access points, and other network devices. It provides a comprehensive REST API (v7.1+) and a TCP-based binary API for programmatic management of IP addresses, interfaces, firewall rules, routing, VPN configurations, DHCP, DNS, and system resources. RouterOS powers MikroTik hardware and can also be deployed as a virtual machine (CHR).
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/apis.yml)
+**Areas:** Networking · Router · Network Management · Firewall · MikroTik
 
-## Scope
+## RouterOS on APIs.io
 
-- **Type:** Index
+Everything profiled for RouterOS is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/routeros/](https://apis.io/providers/routeros/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (11)
 
-- Networking
-- Routers
-- Network Management
-- Firewall
-- MikroTik
+- [RouterOS TCP API](https://apis.io/apis/routeros/routeros-tcp-api/) — The RouterOS TCP API is the native binary protocol for RouterOS, running on TCP port 8728 (standard) and TCP port 8729 (SSL/TLS). It uses a sentence-based…
+- [RouterOS Bridge API](https://apis.io/apis/routeros/routeros-bridge-api/) — Bridge interface management
+- [RouterOS DHCP API](https://apis.io/apis/routeros/routeros-dhcp-api/) — DHCP server and client management
+- [RouterOS DNS API](https://apis.io/apis/routeros/routeros-dns-api/) — DNS cache and configuration
+- [RouterOS Firewall API](https://apis.io/apis/routeros/routeros-firewall-api/) — Firewall rules, NAT, and address lists
+- [RouterOS Interface API](https://apis.io/apis/routeros/routeros-interface-api/) — Network interface management
+- [RouterOS IP Address API](https://apis.io/apis/routeros/routeros-ip-address-api/) — IP address configuration and management
+- [RouterOS Routing API](https://apis.io/apis/routeros/routeros-routing-api/) — Routing tables, BGP, OSPF, and static routes
+- [RouterOS System API](https://apis.io/apis/routeros/routeros-system-api/) — System information, identity, and scripts
+- [RouterOS VPN API](https://apis.io/apis/routeros/routeros-vpn-api/) — VPN tunnels and configurations
+- [RouterOS Wireless API](https://apis.io/apis/routeros/routeros-wireless-api/) — Wireless interface and station management
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-11-07
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### RouterOS REST API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The RouterOS REST API is a JSON wrapper over the RouterOS console API, available from RouterOS v7.1beta4+. It enables create, read, update, and delete operations on all RouterOS configuration menus via standard HTTP methods (GET, PUT, PATCH, DELETE, POST). Authentication uses HTTP Basic Auth with console credentials. Supports filtering, property selection (.proplist), and complex queries. Accessible at https://{router-ip}/rest.
+- [Routeros Agentic Access](https://apis.io/agentic-access/routeros/routeros-agentic-access/)
 
-- **Human URL:** [https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API](https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API)
-- **Base URL:** `https://{router-ip}/rest`
+#### JSON Schema (3)
 
-#### Tags
+The data models the API reads and writes.
 
-- Networking
-- Router Management
-- REST API
-- Network Configuration
-- Firewall
-- DHCP
-- DNS
+- [RouterOS Firewall Filter Rule](https://apis.io/schemas/routeros/routeros-firewall-filter/)
+- [RouterOS Interface](https://apis.io/schemas/routeros/routeros-interface/)
+- [RouterOS IP Address](https://apis.io/schemas/routeros/routeros-ip-address/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/47579162/REST+API)
-- [Documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/openapi/routeros-rest-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/rules/routeros-rules.yml)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-ip-address-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-interface-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-schema/routeros-firewall-filter-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-structure/routeros-ip-address-structure.json)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld)
-- [Example](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-ip-addresses-example.json)
-- [Example](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-list-firewall-filters-example.json)
-- [Example](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/examples/routeros-get-system-resource-example.json)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml)
-- [Postman Collection](collections/routeros-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/routeros-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### RouterOS TCP API
+- [Routeros Ip Address Structure](https://apis.io/json-structure/routeros/routeros-ip-address-structure/)
 
-The RouterOS TCP API is the native binary protocol for RouterOS, running on TCP port 8728 (standard) and TCP port 8729 (SSL/TLS). It uses a sentence-based word protocol with variable-length encoding, supporting tagged concurrent commands, streaming changes via /listen, and cancellation. Used by most RouterOS client libraries (Python, PHP, Java, Go, etc.).
+#### JSON-LD (1)
 
-- **Human URL:** [https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
-- **Base URL:** `tcp://{router-ip}:8728`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Routeros Context](https://apis.io/jsonld/routeros/routeros-context/)
 
-- Networking
-- Router Management
-- TCP API
-- Binary Protocol
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://help.mikrotik.com/docs/spaces/ROS/pages/47579160/API)
-- [Documentation](https://wiki.mikrotik.com/wiki/Manual:API)
-- [Postman Collection](collections/routeros-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/routeros-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [RouterOS Vocabulary](https://apis.io/vocabularies/routeros/routeros-vocabulary/)
 
-## Common Properties
+#### Examples (3)
+
+Example requests and responses.
+
+- [Routeros Get System Resource Example](https://apis.io/examples/routeros/routeros-get-system-resource-example/)
+- [Routeros List Firewall Filters Example](https://apis.io/examples/routeros/routeros-list-firewall-filters-example/)
+- [Routeros List Ip Addresses Example](https://apis.io/examples/routeros/routeros-list-ip-addresses-example/)
+
+#### Collections (11)
+
+Postman and Open Collection request collections.
+
+- [RouterOS REST Bridge API](https://apis.io/collections/routeros/open-routeros-bridge-api/)
+- [RouterOS REST Bridge DHCP API](https://apis.io/collections/routeros/open-routeros-dhcp-api/)
+- [RouterOS REST Bridge DNS API](https://apis.io/collections/routeros/open-routeros-dns-api/)
+- [RouterOS REST Bridge Firewall API](https://apis.io/collections/routeros/open-routeros-firewall-api/)
+- [RouterOS REST Bridge Interface API](https://apis.io/collections/routeros/open-routeros-interface-api/)
+- [RouterOS REST Bridge IP Address API](https://apis.io/collections/routeros/open-routeros-ip-address-api/)
+- [RouterOS REST API](https://apis.io/collections/routeros/open-routeros-rest-api/)
+- [RouterOS REST Bridge Routing API](https://apis.io/collections/routeros/open-routeros-routing-api/)
+- [RouterOS REST Bridge System API](https://apis.io/collections/routeros/open-routeros-system-api/)
+- [RouterOS REST Bridge VPN API](https://apis.io/collections/routeros/open-routeros-vpn-api/)
+- [RouterOS REST Bridge Wireless API](https://apis.io/collections/routeros/open-routeros-wireless-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [RouterOS — jsonschema rules](https://apis.io/rules/routeros/routeros-jsonschema-spectral-rules/)
+- [RouterOS API Rules](https://apis.io/rules/routeros/routeros-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Routeros Authentication](https://apis.io/security/routeros/routeros-authentication/)
+- [Routeros Domain Security](https://apis.io/security/routeros/routeros-domain-security/)
+- [Routeros Vulnerability Disclosure](https://apis.io/security/routeros/routeros-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Routeros Plans Pricing](https://apis.io/plans/routeros/routeros-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Routeros Rate Limits](https://apis.io/rate-limits/routeros/routeros-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Routeros Finops](https://apis.io/finops/routeros/routeros-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://mikrotik.com)
 - [Documentation](https://help.mikrotik.com/docs/spaces/ROS)
-- [Git Hub Org](https://github.com/mikrotik)
-- [Forum](https://forum.mikrotik.com)
-- [Wiki](https://wiki.mikrotik.com)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/vocabulary/routeros-vocabulary.yml)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/routeros/refs/heads/main/json-ld/routeros-context.jsonld)
+- [Blog](https://mikrotik.com/supportsec)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 34.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 61.2 |
+| Contract governance | 27.3 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 7.9 |
+
+**Agent readiness 20.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/routeros/](https://apis.io/providers/routeros/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for RouterOS: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/routeros/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
